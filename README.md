@@ -1,7 +1,26 @@
 # chromatic4cpp
-给c++用的色值定义
+## 介绍
+chromatic4cpp 致力于为 c++ 的色值操作提供便利，目前仅支持 RGB 和 RGBA 两种色值类型。chromatic4cpp 主要特点有：
+- 支持色值之间的运算（加、减、乘、除、取余、等于、不等于）；
+- 支持十六进制色值与RGB、RGBA之间的转换；
+- 提供了丰富的RGB、RGBA预定义色值；
 
-**测试用例：**
+chromatic4cpp 的主要接口如下：
+- scale : 同乘法
+- divide : 同除法
+- clear : 清空色值
+- dump : 打印色值 *[输出 RGB(a) 和 十六进制 格式]*
+- red : 获取 r 位色值
+- green : 获取 g 位色值
+- blue : 获取 b 位色值
+- alpha : 获取 a 位色值
+- check : 检查输入的色值是否有效（结果会获得有效的色值）
+- fromhex : 用十六进制色值进行转换
+- tohex : 转换为十六进制色值
+- toRGB(A) : 将自身转换为RGB(A)色值
+- fromRGB(A) : 从RGB(A)色值转换自身的色值
+
+## 测试用例
 ``` cpp
 //
 //  main.cpp
@@ -105,7 +124,7 @@ int main() {
 
 ```
 
-**输出：**
+## 输出
 
 ``` plaintext
 => RGB original data:
@@ -187,7 +206,7 @@ RGBA(255,255,255,255), HEX(ffffffff)
 Program ended with exit code: 0
 ```
 
-**预定义的色值：**
+## 预定义的色值
 ```cpp
 const RGB RGB::INDIGO = RGB("4B0082");
 const RGB RGB::GOLD = RGB("FFD700");
