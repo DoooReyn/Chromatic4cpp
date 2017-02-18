@@ -45,6 +45,7 @@ public:
     RGBA operator /  (const float scale);
     RGBA operator /  (const RGBA& other);
     RGBA operator %  (const t_rgba cv);
+    RGBA operator %  (const float cv);
     RGBA operator %  (const RGBA& other);
     
     bool equals(const RGBA& other) {

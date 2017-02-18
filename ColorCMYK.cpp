@@ -174,6 +174,6 @@ CMYK CMYK::fromhex(std::string hex) {
 }
 
 const t_cmyk CMYK::MIN = 0.000f;
-const t_cmyk CMYK::MID = 50.000f;
-const t_cmyk CMYK::MAX = 100.000f;
+const t_cmyk CMYK::MID = 0.500f;
+const t_cmyk CMYK::MAX = 1.000f;
 

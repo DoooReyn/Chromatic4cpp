@@ -123,6 +123,14 @@ RGB RGB::operator%(const t_rgb cv)
     return *this;
 }
 
+RGB RGB::operator%(const float cv)
+{
+    r = check((int)fmod(r, cv));
+    g = check((int)fmod(g, cv));
+    b = check((int)fmod(b, cv));
+    return *this;
+}
+
 RGB RGB::operator%(const RGB& other)
 {
     r = check((int)(r % other.r));

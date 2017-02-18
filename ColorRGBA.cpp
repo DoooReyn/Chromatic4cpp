@@ -124,12 +124,21 @@ RGBA RGBA::operator/(const RGBA& other)
     return *this;
 }
 
-RGBA RGBA::operator%(const t_rgba c)
+RGBA RGBA::operator%(const t_rgba cv)
 {
-    r = check((int)(r % c));
-    g = check((int)(g % c));
-    b = check((int)(b % c));
-    a = check((int)(a % c));
+    r = check((int)(r % cv));
+    g = check((int)(g % cv));
+    b = check((int)(b % cv));
+    a = check((int)(a % cv));
+    return *this;
+}
+
+RGBA RGBA::operator%(const float cv)
+{
+    r = check((int)fmod(r, cv));
+    g = check((int)fmod(g, cv));
+    b = check((int)fmod(b, cv));
+    a = check((int)fmod(a, cv));
     return *this;
 }
 

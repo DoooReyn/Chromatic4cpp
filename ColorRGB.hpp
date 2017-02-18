@@ -45,6 +45,7 @@ public:
     RGB  operator /  (const float scale);
     RGB  operator /  (const RGB& other);
     RGB  operator %  (const t_rgb c);
+    RGB  operator %  (const float c);
     RGB  operator %  (const RGB& other);
     
     bool equals(const RGB& other) {

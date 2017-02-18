@@ -21,4 +21,8 @@ typedef unsigned short d_rgba;
 typedef float t_cmyk;
 typedef float d_cmyk;
 
+typedef unsigned short t_hsl_hue;
+typedef float t_hsl_saturation;
+typedef float t_hsl_lightness;
+
 #endif /* BaseMath_hpp */
