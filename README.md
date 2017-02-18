@@ -1,10 +1,14 @@
 # chromatic4cpp
-chromatic4cpp 致力于为 c++ 的色值操作提供便利，目前仅支持 RGB 和 RGBA 两种色值类型。
-chromatic4cpp 主要特点有：
+
+## 一、介绍
+chromatic4cpp 致力于为 c++ 的色值操作和相互转换提供便利，当前已经支持 RGB，RGBA，CMYK，HSL，HSV 五种色值类型。
+
+**chromatic4cpp 主要特点有：**
 - 支持色值之间的运算（加、减、乘、除、取余、等于、不等于）；
 - 支持十六进制色值与RGB、RGBA之间的转换；
 - 提供了丰富的RGB、RGBA预定义色值；
-chromatic4cpp 的主要接口如下：
+
+**chromatic4cpp 的主要接口如下：**
 - `equals` : 同等于
 - `nequals` : 同不等于
 - `add` : 同加法
@@ -37,7 +41,7 @@ chromatic4cpp 的主要接口如下：
 - `toHEX` : 转换为十六进制模式
 
 
-**测试用例：**
+## 二、测试用例
 ``` cpp
 #include <iostream>
 #include "Chromatics/Chromatics.hpp"
@@ -188,7 +192,7 @@ int main() {
 
 ```
 
-## 输出
+**输出：**
 
 ``` zsh
 ==================== RGB TestCase Start ===================
@@ -313,7 +317,7 @@ RGBA(250,235,215,255) HEX(faebd7ff)
 Program ended with exit code: 0
 ```
 
-## 预定义的色值
+## 三、预定义的色值
 ```cpp
 const std::string INDIGO = "4B0082FF";
 const std::string GOLD = "FFD700FF";
