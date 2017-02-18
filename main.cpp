@@ -12,6 +12,8 @@
 void RGB_TestCase() {
     RGB case0 = RGB(Chromatic::REBECCAPURPLE);
     
+    std::cout << "==================== RGB TestCase Start ===================" << std::endl;
+    
     std::cout << "=> RGB original data:" << std::endl;
     case0.dump();
     
@@ -20,7 +22,7 @@ void RGB_TestCase() {
     (case0-1).dump();
     (case0*2).dump();
     (case0/2).dump();
-    (case0%15).dump();
+    (case0%15.f).dump();
     std::cout << std::endl << "=> mixed  operator:" << std::endl;
     case0.clear(166);
     (case0+RGB(1,1,1)).dump();
@@ -49,9 +51,17 @@ void RGB_TestCase() {
     
     std::cout << std::endl << "=> clear with:" << std::endl;
     case0.clear(255).dump();
+    
+    std::cout << std::endl << "=> RED + LIME = YELLOW : " << std::endl;
+    (RGB(Chromatic::RED) + RGB(Chromatic::LIME)).dump();
+    RGB(Chromatic::YELLOW).dump();
+    
+    std::cout << "==================== RGB TestCase End =====================" << std::endl << std::endl;
 }
 
+
 void RGBA_TestCase() {
+    std::cout << "=================== RGBA TestCase Start ===================" << std::endl;
     RGBA case0 = RGBA(Chromatic::INDIGO);
     
     std::cout << "=> RGBA original data:" << std::endl;
@@ -62,7 +72,7 @@ void RGBA_TestCase() {
     (case0-1).dump();
     (case0*2).dump();
     (case0/2).dump();
-    (case0%15).dump();
+    (case0%15.f).dump();
     std::cout << std::endl << "=> mixed  operator:" << std::endl;
     case0.clear(166);
     (case0+RGBA(1,1,1,1)).dump();
@@ -91,18 +101,29 @@ void RGBA_TestCase() {
     
     std::cout << std::endl << "=> clear with:" << std::endl;
     case0.clear(255).dump();
+    std::cout << "=================== RGBA TestCase End =====================" << std::endl << std::endl;
 }
 
 void CMYK_TestCase() {
+    std::cout << "=================== CMYK TestCase Start ===================" << std::endl;
     RGBA rgba = RGBA(Chromatic::BURLYWOOD);
     CMYK case0 = CMYK(rgba);
     rgba.fromCMYK(case0).dump();
     case0.dump();
+    std::cout << "=================== CMYK TestCase END =====================" << std::endl << std::endl;
+}
+
+void HSL_TestCase() {
+    std::cout << "==================== HSL TestCase Start ===================" << std::endl;
+    HSL hsl = HSL(120, 0.5f, 0.4f).dump();
+    hsl.fromRGB(RGB(33,99,33)).dump();
+    std::cout << "==================== HSL TestCase Start ===================" << std::endl << std::endl;
 }
 
 int main() {
-//    RGB_TestCase();
-//    RGBA_TestCase();
+    RGB_TestCase();
+    RGBA_TestCase();
     CMYK_TestCase();
+    HSL_TestCase();
 }
 
