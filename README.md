@@ -1,5 +1,5 @@
 # chromatic4cpp
-> chromatic4cpp 致力于为 c++ 的色值操作提供便利，目前仅支持 RGB 和 RGBA 两种色值类型。
+chromatic4cpp 致力于为 c++ 的色值操作提供便利，目前仅支持 RGB 和 RGBA 两种色值类型。
 chromatic4cpp 主要特点有：
 - 支持色值之间的运算（加、减、乘、除、取余、等于、不等于）；
 - 支持十六进制色值与RGB、RGBA之间的转换；
