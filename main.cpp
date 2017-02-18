@@ -7,10 +7,10 @@
 //
 
 #include <iostream>
-#include "Chromatics/ColorRGBA.hpp"
+#include "Chromatics/Chromatics.hpp"
 
 void RGB_TestCase() {
-    RGB case0 = RGB::REBECCAPURPLE;
+    RGB case0 = RGB(Chromatic::REBECCAPURPLE);
     
     std::cout << "=> RGB original data:" << std::endl;
     case0.dump();
@@ -52,7 +52,7 @@ void RGB_TestCase() {
 }
 
 void RGBA_TestCase() {
-    RGBA case0 = RGBA::INDIGO;
+    RGBA case0 = RGBA(Chromatic::INDIGO);
     
     std::cout << "=> RGBA original data:" << std::endl;
     case0.dump();
@@ -93,8 +93,16 @@ void RGBA_TestCase() {
     case0.clear(255).dump();
 }
 
+void CMYK_TestCase() {
+    RGBA rgba = RGBA(Chromatic::BURLYWOOD);
+    CMYK case0 = CMYK(rgba);
+    rgba.fromCMYK(case0).dump();
+    case0.dump();
+}
+
 int main() {
-    RGB_TestCase();
-    RGBA_TestCase();
+//    RGB_TestCase();
+//    RGBA_TestCase();
+    CMYK_TestCase();
 }
 
