@@ -43,6 +43,11 @@ RGBA::RGBA(const HSL&  hsl)
     fromHSL(hsl);
 }
 
+RGBA::RGBA(const HSV&  hsv)
+{
+    fromHSV(hsv);
+}
+
 RGBA::RGBA(std::string hex)
 {
     fromHEX(hex, false);
@@ -184,6 +189,11 @@ RGBA RGBA::fromHSL(const HSL &hsl)
     return *this = RGB(hsl).toRGBA();
 }
 
+RGBA RGBA::fromHSV(const HSV &hsv)
+{
+    return *this = RGB(hsv).toRGBA();
+}
+
 RGBA RGBA::fromHEX(std::string hex, bool bCheckHex) {
     clear();
     if(bCheckHex && !StringUtils::checkhex(hex)) return *this;
@@ -216,6 +226,11 @@ CMYK RGBA::toCMYK()
 HSL RGBA::toHSL()
 {
     return RGB(*this).toHSL();
+}
+
+HSV RGBA::toHSV()
+{
+    return RGB(*this).toHSV();
 }
 
 std::string RGBA::toHEX()

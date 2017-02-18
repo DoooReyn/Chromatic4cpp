@@ -57,7 +57,7 @@ void RGB_TestCase() {
     RGB(Chromatic::YELLOW).dump();
     
     std::cout << std::endl << "=> convertor: " << std::endl;
-    RGB rgb = RGB(Chromatic::ORCHID).dump();
+    RGB rgb = RGB().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     rgb.toRGBA().dump();
     rgb.toCMYK().dump();
     rgb.toHSL().dump();
@@ -109,7 +109,7 @@ void RGBA_TestCase() {
     case0.clear(255).dump();
     
     std::cout << std::endl << "=> convertor: " << std::endl;
-    RGBA rgba = RGBA().fromRGB(RGB(Chromatic::ORCHID)).dump();
+    RGBA rgba = RGBA().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     rgba.toRGB().dump();
     rgba.toCMYK().dump();
     rgba.toHSL().dump();
@@ -118,7 +118,7 @@ void RGBA_TestCase() {
 
 void CMYK_TestCase() {
     std::cout << "=================== CMYK TestCase Start ===================" << std::endl;
-    CMYK cmyk = CMYK().fromRGB(RGB(Chromatic::ORCHID)).dump();
+    CMYK cmyk = CMYK().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     cmyk.toRGB().dump();
     cmyk.toHSL().dump();
     cmyk.toRGBA().dump();
@@ -127,10 +127,19 @@ void CMYK_TestCase() {
 
 void HSL_TestCase() {
     std::cout << "==================== HSL TestCase Start ===================" << std::endl;
-    HSL hsl = HSL().fromRGB(RGB(Chromatic::ORCHID)).dump();
+    HSL hsl = HSL().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     hsl.toRGB().dump();
     hsl.toCMYK().dump();
     hsl.toRGBA().dump();
+    std::cout << "==================== HSL TestCase Start ===================" << std::endl << std::endl;
+}
+
+void HSV_TestCase() {
+    std::cout << "==================== HSL TestCase Start ===================" << std::endl;
+    HSV hsv = HSV().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    hsv.toRGB().dump();
+    hsv.toCMYK().dump();
+    hsv.toRGBA().dump();
     std::cout << "==================== HSL TestCase Start ===================" << std::endl << std::endl;
 }
 
@@ -139,5 +148,6 @@ int main() {
     RGBA_TestCase();
     CMYK_TestCase();
     HSL_TestCase();
+    HSV_TestCase();
 }
 

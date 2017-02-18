@@ -15,6 +15,7 @@
 struct RGBA;
 struct CMYK;
 struct HSL;
+struct HSV;
 
 struct RGB
 {
@@ -32,6 +33,7 @@ public:
     RGB(const RGBA& rgba);
     RGB(const CMYK& cmyk);
     RGB(const HSL&  hsl);
+    RGB(const HSV&  hsv);
     RGB(std::string hex);
     
     
@@ -128,14 +130,16 @@ public:
     
     
     // convertor
-    RGBA toRGBA();
     RGB fromRGBA(const RGBA& rgba);
-    const std::string toHEX();
-    RGB fromHEX(std::string hex, bool bCheckHex=false);
-    CMYK toCMYK();
     RGB fromCMYK(const CMYK& cmyk);
-    HSL toHSL();
     RGB fromHSL(const HSL& hsl);
+    RGB fromHSV(const HSV& hsv);
+    RGB fromHEX(std::string hex, bool bCheckHex=false);
+    RGBA toRGBA();
+    CMYK toCMYK();
+    HSL  toHSL();
+    HSV  toHSV();
+    const std::string toHEX();
     
     /* constants */
     static const t_rgb MIN;

@@ -122,29 +122,12 @@ HSL HSL::operator % (const HSL& other) {
     return *this;
 }
 
-
 HSL HSL::dump() {
     char txt[32];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "HSL(%03d,%.03f,%.03f) HEX(%s)", h, s, l, toHEX().c_str());
     std::cout << txt << std::endl;
     return *this;
-}
-
-float hue2rgb(float p, float q, float t) {
-    if(t < 0) t += 1;
-    if(t > 0) t -= 1;
-    if(t < 1.f / 6) return p + (q - p) * 6 * t;
-    if(t < 1.f / 2) return q;
-    if(t < 2.f / 3) return p + (q - p) * ( 2.f / 3 - t) * 6;
-    return p;
-}
-
-float max03f(float f1, float f2, float f3) {
-    return MAX(MAX(f1, f2), f3);
-}
-float min03f(float f1, float f2, float f3) {
-    return MIN(MIN(f1, f2), f3);
 }
 
 HSL HSL::fromRGB(const RGB& rgb) {
@@ -185,6 +168,10 @@ HSL HSL::fromCMYK(const CMYK& cmyk) {
     return *this = RGB(cmyk).toHSL();
 }
 
+HSL HSL::fromHSV(const HSV &hsv) {
+    return *this = RGB(hsv).toHSL();
+}
+
 HSL HSL::fromHEX(std::string hex) {
     return *this = RGB(hex).toHSL();
 }
@@ -219,6 +206,10 @@ RGBA HSL::toRGBA() {
 
 CMYK HSL::toCMYK() {
     return toRGB().toCMYK();
+}
+
+HSV HSL::toHSV() {
+    return toRGB().toHSV();
 }
 
 std::string HSL::toHEX() {

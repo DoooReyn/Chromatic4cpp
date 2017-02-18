@@ -16,6 +16,7 @@
 struct RGB;
 struct RGBA;
 struct CMYK;
+struct HSV;
 
 struct HSL {
     /* data */
@@ -164,10 +165,12 @@ struct HSL {
     HSL fromRGB(const RGB& rgb);
     HSL fromRGBA(const RGBA& rgba);
     HSL fromCMYK(const CMYK& cmyk);
+    HSL fromHSV(const HSV& hsv);
     HSL fromHEX(std::string hex);
     RGB  toRGB();
     RGBA toRGBA();
     CMYK toCMYK();
+    HSV  toHSV();
     std::string toHEX();
     
     

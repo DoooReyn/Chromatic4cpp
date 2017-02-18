@@ -10,10 +10,12 @@
 #define Chromatics_hpp
 
 #include <iostream>
+#include "BaseMath.hpp"
 #include "ColorRGB.hpp"
 #include "ColorRGBA.hpp"
 #include "ColorCMYK.hpp"
 #include "ColorHSL.hpp"
+#include "ColorHSV.hpp"
 
 namespace Chromatic {
     const std::string INDIGO = "4B0082FF";

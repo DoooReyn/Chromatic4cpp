@@ -41,6 +41,11 @@ RGB::RGB(const HSL& hsl)
     fromHSL(hsl);
 }
 
+RGB::RGB(const HSV& hsv)
+{
+    fromHSV(hsv);
+}
+
 RGB::RGB(std::string hex)
 {
     fromHEX(hex, false);
@@ -168,6 +173,11 @@ RGB RGB::fromHSL(const HSL& hsl)
     return *this = HSL(hsl).toRGB();
 }
 
+RGB RGB::fromHSV(const HSV& hsv)
+{
+    return *this = HSV(hsv).toRGB();
+}
+
 RGB RGB::fromHEX(std::string hex, bool bCheckHex)
 {
     clear();
@@ -201,6 +211,11 @@ CMYK RGB::toCMYK()
 HSL RGB::toHSL()
 {
     return HSL(*this);
+}
+
+HSV RGB::toHSV()
+{
+    return HSV(*this);
 }
 
 const std::string RGB::toHEX()

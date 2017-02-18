@@ -29,6 +29,7 @@ struct CMYK {
     CMYK(const RGB& rgb);
     CMYK(const RGBA& rgba);
     CMYK(const HSL& hsl);
+    CMYK(const HSV& hsv);
     CMYK(std::string hex);
     
     
@@ -134,10 +135,12 @@ struct CMYK {
     CMYK fromRGB(const RGB& rgb);
     CMYK fromRGBA(const RGBA& rgba);
     CMYK fromHSL(const HSL& hsl);
+    CMYK fromHSV(const HSV& hsv);
     CMYK fromHEX(const std::string hex);
     RGB  toRGB();
     RGBA toRGBA();
     HSL  toHSL();
+    HSV  toHSV();
     const std::string toHEX();
     
     

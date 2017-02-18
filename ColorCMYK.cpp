@@ -42,6 +42,10 @@ CMYK::CMYK(const HSL& hsl) {
     fromHSL(hsl);
 }
 
+CMYK::CMYK(const HSV& hsv) {
+    fromHSV(hsv);
+}
+
 CMYK::CMYK(std::string hex) {
     fromHEX(hex);
 }
@@ -167,6 +171,10 @@ CMYK CMYK::fromHEX(std::string hex) {
     return *this = RGB(hex).toCMYK();
 }
 
+CMYK CMYK::fromHSV(const HSV& hsv) {
+    return *this = RGB(hsv).toCMYK();
+}
+
 RGB CMYK::toRGB() {
     t_rgb r = 255 * (1.0f - c) * (1.0f - k);
     t_rgb g = 255 * (1.0f - m) * (1.0f - k);
@@ -180,6 +188,10 @@ RGBA CMYK::toRGBA() {
 
 HSL CMYK::toHSL() {
     return toRGB().toHSL();
+}
+
+HSV CMYK::toHSV() {
+    return toRGB().toHSV();
 }
 
 const std::string CMYK::toHEX() {

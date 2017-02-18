@@ -31,6 +31,7 @@ public:
     RGBA(const RGB&  other);
     RGBA(const CMYK& cmyk);
     RGBA(const HSL&  hsl);
+    RGBA(const HSV&  hsv);
     RGBA(std::string hex);
     
     
@@ -136,10 +137,12 @@ public:
     RGBA fromRGB(const RGB& rgb);
     RGBA fromCMYK(const CMYK& cmyk);
     RGBA fromHSL(const HSL& hsl);
+    RGBA fromHSV(const HSV& hsv);
     RGBA fromHEX(std::string hex, bool bCheckHex=false);
     RGB  toRGB();
     CMYK toCMYK();
     HSL  toHSL();
+    HSV  toHSV();
     std::string toHEX();
     
     
