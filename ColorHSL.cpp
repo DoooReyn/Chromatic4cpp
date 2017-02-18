@@ -15,11 +15,37 @@ HSL::HSL()
 , l(HSL::MIN_LIGHTNESS)
 {}
 
+HSL::HSL(const HSL& other)
+: h(other.h)
+, s(other.s)
+, l(other.l)
+{}
+
 HSL::HSL(t_hsl_hue _h, t_hsl_saturation _s, t_hsl_lightness _l)
 : h(checkHue(_h))
 , s(checkSaturation(_s))
 , l(checkLightness(_l))
 {}
+
+HSL::HSL(const RGB& rgb)
+{
+    fromRGB(rgb);
+}
+
+HSL::HSL(const RGBA& rgba)
+{
+    fromRGBA(rgba);
+}
+
+HSL::HSL(const CMYK& cmyk)
+{
+    fromCMYK(cmyk);
+}
+
+HSL::HSL(const std::string hex)
+{
+    fromHEX(hex);
+}
 
 bool HSL::operator == (const HSL& other) const {
     return (h == other.h && s == other.s && l == other.l);
@@ -98,16 +124,9 @@ HSL HSL::operator % (const HSL& other) {
 
 
 HSL HSL::dump() {
-    char txt[128];
+    char txt[32];
     memset(txt, 0, sizeof(txt));
-    RGB rgb = toRGB();
-    CMYK cmyk = toCMYK();
-    sprintf(txt, "HSL(%03d,%.03f,%.03f) RGB(%03d,%03d,%03d) HEX(%s) CMYK(%.03f,%.03f,%.03f,%.03f)",
-            h, s, l,
-            rgb.r, rgb.g, rgb.b,
-            tohex().c_str(),
-            cmyk.c, cmyk.m, cmyk.y, cmyk.k
-            );
+    sprintf(txt, "HSL(%03d,%.03f,%.03f) HEX(%s)", h, s, l, toHEX().c_str());
     std::cout << txt << std::endl;
     return *this;
 }
@@ -119,30 +138,6 @@ float hue2rgb(float p, float q, float t) {
     if(t < 1.f / 2) return q;
     if(t < 2.f / 3) return p + (q - p) * ( 2.f / 3 - t) * 6;
     return p;
-}
-
-RGB HSL::toRGB() {
-    float r = 0.f, g = 0.f, b = 0.f;
-    float c = (1 - fabs(2 * l - 1)) * s;
-    float x = c * (1 - abs((h / 60) % 2 - 1));
-    float m = l - c / 2.f;
-    if(h < 60) {
-        r = c; g = x; b = 0;
-    } else if (h < 120) {
-        r = x; g = c; b = 0;
-    } else if (h < 180) {
-        r = 0; g = c; b = x;
-    } else if (h < 240) {
-        r = 0; g = x; b = c;
-    } else if ( h < 300) {
-        r = x; g = 0; b = c;
-    } else if ( h < 360) {
-        r = c; g= 0; b = x;
-    }
-    r = (r + m) * RGB::MAX + .5f;
-    g = (g + m) * RGB::MAX + .5f;
-    b = (b + m) * RGB::MAX + .5f;
-    return RGB(r, g, b);
 }
 
 float max03f(float f1, float f2, float f3) {
@@ -159,48 +154,79 @@ HSL HSL::fromRGB(const RGB& rgb) {
     float cmax = max03f(r, g, b);
     float cmin = min03f(r, g, b);
     float delta = cmax - cmin;
-    l = (cmax + cmin) / 2;
+    l = (cmax + cmin) / 2.f;
     if(cmax == cmin) {
-        h = s = 0;
-    } else if (cmax == r) {
-        h = 60 * fmod((g - b) / delta, 6);
+        h = 0;
+    } else if (cmax == r && g >= b) {
+        h = 60 * ((g - b) / delta + 0);
+    } else if (cmax == r && g < b) {
+        h = 60 * ((g - b) / delta + 6);
     } else if (cmax == g) {
         h = 60 * ((b - r) / delta + 2);
     } else if (cmax == b) {
         h = 60 * ((r - g) / delta + 4);
     }
-    if(cmax != cmin) {
-        s = 1 - delta / (1-fabs(2*l-1));
+    if(l == 0 || cmax == cmin) {
+        s = 0;
+    } else if ( 0 < l <= 0.5f) {
+        s = delta / 2 / l;
+    } else if ( l > 0.5f ) {
+        s = delta / 2 / (1-l);
     }
     
     return *this;
+}
+
+HSL HSL::fromRGBA(const RGBA& rgba) {
+    return *this = RGB(rgba).toHSL();
+}
+
+HSL HSL::fromCMYK(const CMYK& cmyk) {
+    return *this = RGB(cmyk).toHSL();
+}
+
+HSL HSL::fromHEX(std::string hex) {
+    return *this = RGB(hex).toHSL();
+}
+
+RGB HSL::toRGB() {
+    float r = 0.f, g = 0.f, b = 0.f;
+    float c = (1 - fabs(2 * l - 1)) * s;
+    float x = c * (1 - fabs(fmod(h / 60.f, 2) - 1));
+    float m = l - c / 2.f;
+    if(h < 60) {
+        r = c; g = x; b = 0;
+    } else if (h < 120) {
+        r = x; g = c; b = 0;
+    } else if (h < 180) {
+        r = 0; g = c; b = x;
+    } else if (h < 240) {
+        r = 0; g = x; b = c;
+    } else if ( h < 300) {
+        r = x; g = 0; b = c;
+    } else if ( h < 360) {
+        r = c; g = 0; b = x;
+    }
+    r = (r + m) * RGB::MAX + .5f;
+    g = (g + m) * RGB::MAX + .5f;
+    b = (b + m) * RGB::MAX + .5f;
+    return RGB(r, g, b);
 }
 
 RGBA HSL::toRGBA() {
     return toRGB().toRGBA();
 }
 
-HSL HSL::fromRGBA(const RGBA& rgba) {
-    return fromRGB(RGB(rgba));
-}
-
-std::string HSL::tohex() {
-    return toRGB().tohex();
-}
-
-HSL HSL::fromhex(std::string hex) {
-    return fromRGB(RGB(hex));
-}
-
 CMYK HSL::toCMYK() {
     return toRGB().toCMYK();
 }
 
-HSL HSL::fromCMYK(const CMYK& cmyk) {
-    return fromRGB(RGB(cmyk));
+std::string HSL::toHEX() {
+    return toRGB().toHEX();
 }
 
 
+/* constants */
 const t_hsl_hue HSL::MIN_HUE = 0;
 const t_hsl_hue HSL::MID_HUE = 180;
 const t_hsl_hue HSL::MAX_HUE = 359;

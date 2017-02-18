@@ -30,6 +30,7 @@ RGBA::RGBA(const RGB& other)
 : r(other.r)
 , g(other.g)
 , b(other.b)
+, a(RGBA::MAX)
 {}
 
 RGBA::RGBA(const CMYK& cmyk)
@@ -37,9 +38,14 @@ RGBA::RGBA(const CMYK& cmyk)
     fromCMYK(cmyk);
 }
 
+RGBA::RGBA(const HSL&  hsl)
+{
+    fromHSL(hsl);
+}
+
 RGBA::RGBA(std::string hex)
 {
-    fromhex(hex, false);
+    fromHEX(hex, false);
 }
 
 bool RGBA::operator==(const RGBA& other) const
@@ -153,28 +159,32 @@ RGBA RGBA::operator%(const RGBA& other)
 
 RGBA RGBA::dump()
 {
-    char txt[128];
+    char txt[32];
     memset(txt, 0, sizeof(txt));
-    CMYK cmyk = toCMYK();
-    sprintf(txt, "RGBA(%03d,%03d,%03d,%03d) HEX(%s) CMYK(%.03f,%.03f,%.03f,%.03f)",
-            r, g, b, a,
-            tohex().c_str(),
-            cmyk.c, cmyk.m, cmyk.y, cmyk.k);
+    sprintf(txt, "RGBA(%03d,%03d,%03d,%03d) HEX(%s)", r, g, b, a, toHEX().c_str());
     std::cout << txt << std::endl;
     return *this;
 }
 
-std::string RGBA::tohex()
-{
-    std::string s_rgba("");
-    s_rgba.append(StringUtils::hex02(red  ()));
-    s_rgba.append(StringUtils::hex02(green()));
-    s_rgba.append(StringUtils::hex02(blue ()));
-    s_rgba.append(StringUtils::hex02(alpha()));
-    return s_rgba;
+RGBA RGBA::fromRGB(const RGB& rgb) {
+    r = rgb.r;
+    g = rgb.g;
+    b = rgb.b;
+    a = RGBA::MAX;
+    return *this;
 }
 
-RGBA RGBA::fromhex(std::string hex, bool bCheckHex) {
+RGBA RGBA::fromCMYK(const CMYK& cmyk)
+{
+    return *this = RGB(cmyk).toRGBA();
+}
+
+RGBA RGBA::fromHSL(const HSL &hsl)
+{
+    return *this = RGB(hsl).toRGBA();
+}
+
+RGBA RGBA::fromHEX(std::string hex, bool bCheckHex) {
     clear();
     if(bCheckHex && !StringUtils::checkhex(hex)) return *this;
     
@@ -198,26 +208,24 @@ RGB RGBA::toRGB() {
     return RGB(r, g, b);
 }
 
-RGBA RGBA::fromRGB(const RGB& rgb) {
-    r = rgb.r;
-    g = rgb.g;
-    b = rgb.b;
-    a = RGBA::MAX;
-    return *this;
-}
-
 CMYK RGBA::toCMYK()
 {
-    return CMYK(*this);
+    return RGB(*this).toCMYK();
 }
 
-RGBA RGBA::fromCMYK(const CMYK& cmyk)
+HSL RGBA::toHSL()
 {
-    r = 255 * (1.0f - cmyk.c) * (1.0f - cmyk.k);
-    g = 255 * (1.0f - cmyk.m) * (1.0f - cmyk.k);
-    b = 255 * (1.0f - cmyk.y) * (1.0f - cmyk.k);
-    a = 255;
-    return *this;
+    return RGB(*this).toHSL();
+}
+
+std::string RGBA::toHEX()
+{
+    std::string s_rgba("");
+    s_rgba.append(StringUtils::hex02(red  ()));
+    s_rgba.append(StringUtils::hex02(green()));
+    s_rgba.append(StringUtils::hex02(blue ()));
+    s_rgba.append(StringUtils::hex02(alpha()));
+    return s_rgba;
 }
 
 

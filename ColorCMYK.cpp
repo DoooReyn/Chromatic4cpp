@@ -18,6 +18,10 @@ CMYK::CMYK(t_cmyk _c, t_cmyk _m, t_cmyk _y, t_cmyk _k)
 : c(check(_c)), m(check(_m)), y(check(_y)), k(check(_k))
 {}
 
+CMYK::CMYK(const CMYK& cmyk)
+: c(cmyk.c), m(cmyk.m), y(cmyk.y), k(cmyk.k)
+{}
+
 t_cmyk min03(t_cmyk v1, t_cmyk v2, t_cmyk v3)
 {
     t_cmyk tmp = MIN(v1,v2);
@@ -27,22 +31,19 @@ t_cmyk min03(t_cmyk v1, t_cmyk v2, t_cmyk v3)
 
 CMYK::CMYK(const RGB& rgb)
 {
-    t_cmyk c0 = 255 - rgb.r;
-    t_cmyk m0 = 255 - rgb.g;
-    t_cmyk y0 = 255 - rgb.b;
-    k = min03(c0, m0, y0);
-    c = (c0-k) * 1.f / (255-k);
-    m = (m0-k) * 1.f / (255-k);
-    y = (y0-k) * 1.f / (255-k);
-    k = k * 1.f / 255;
+    fromRGB(rgb);
 }
 
 CMYK::CMYK(const RGBA& rgba) {
-    *this = CMYK(RGB(rgba));
+    fromRGBA(rgba);
+}
+
+CMYK::CMYK(const HSL& hsl) {
+    fromHSL(hsl);
 }
 
 CMYK::CMYK(std::string hex) {
-    *this = CMYK(RGB(hex));
+    fromHEX(hex);
 }
 
 bool CMYK::operator == (const CMYK& other) const {
@@ -137,17 +138,33 @@ CMYK CMYK::operator % (const CMYK& other) {
 CMYK CMYK::dump() {
     char txt[128];
     memset(txt, 0, sizeof(txt));
-    RGB rgb = toRGB();
-    sprintf(txt, "CMYK(%.03f,%.03f,%.03f,%.03f) RGB(%03d,%03d,%03d) HEX(%s)",
-            c, m, y, k,
-            rgb.r, rgb.g, rgb.b,
-            rgb.tohex().c_str());
+    sprintf(txt, "CMYK(%.03f,%.03f,%.03f,%.03f) HEX(%s)", c, m, y, k, toHEX().c_str());
     std::cout << txt << std::endl;
     return *this;
 }
 
-CMYK CMYK::fromRGB(const RGB& other) {
-    return *this = CMYK(other);
+CMYK CMYK::fromRGB(const RGB& rgb) {
+    t_cmyk c0 = 255 - rgb.r;
+    t_cmyk m0 = 255 - rgb.g;
+    t_cmyk y0 = 255 - rgb.b;
+    k = min03(c0, m0, y0);
+    c = (c0-k) * 1.f / ((255-k) == 0 ? 1 : (255-k));
+    m = (m0-k) * 1.f / ((255-k) == 0 ? 1 : (255-k));
+    y = (y0-k) * 1.f / ((255-k) == 0 ? 1 : (255-k));
+    k = k * 1.f / 255;
+    return *this;
+}
+
+CMYK CMYK::fromRGBA(const RGBA& rgba) {
+    return *this = RGB(rgba).toCMYK();
+}
+
+CMYK CMYK::fromHSL(const HSL& hsl) {
+    return *this = RGB(hsl).toCMYK();
+}
+
+CMYK CMYK::fromHEX(std::string hex) {
+    return *this = RGB(hex).toCMYK();
 }
 
 RGB CMYK::toRGB() {
@@ -157,20 +174,16 @@ RGB CMYK::toRGB() {
     return RGB(r, g, b);
 }
 
-CMYK CMYK::fromRGBA(const RGBA& other) {
-    return *this = CMYK(other);
-}
-
 RGBA CMYK::toRGBA() {
-    return RGBA(*this);
+    return toRGB().toRGBA();
 }
 
-const std::string CMYK::tohex() {
-    return toRGB().tohex();
+HSL CMYK::toHSL() {
+    return toRGB().toHSL();
 }
 
-CMYK CMYK::fromhex(std::string hex) {
-    return *this = CMYK(hex);
+const std::string CMYK::toHEX() {
+    return toRGB().toHEX();
 }
 
 const t_cmyk CMYK::MIN = 0.000f;

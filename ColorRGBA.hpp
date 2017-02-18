@@ -28,8 +28,9 @@ public:
     RGBA();
     RGBA(t_rgba _r, t_rgba _g, t_rgba _b, t_rgba _a);
     RGBA(const RGBA& other);
-    RGBA(const RGB& other);
+    RGBA(const RGB&  other);
     RGBA(const CMYK& cmyk);
+    RGBA(const HSL&  hsl);
     RGBA(std::string hex);
     
     
@@ -132,12 +133,15 @@ public:
     }
     
     /* convertor */
-    RGB toRGB();
     RGBA fromRGB(const RGB& rgb);
-    std::string tohex();
-    RGBA fromhex(std::string hex, bool bCheckHex=false);
-    CMYK toCMYK();
     RGBA fromCMYK(const CMYK& cmyk);
+    RGBA fromHSL(const HSL& hsl);
+    RGBA fromHEX(std::string hex, bool bCheckHex=false);
+    RGB  toRGB();
+    CMYK toCMYK();
+    HSL  toHSL();
+    std::string toHEX();
+    
     
     
     /* constants */

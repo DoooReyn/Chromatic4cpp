@@ -36,9 +36,14 @@ RGB::RGB(const CMYK& cmyk)
     fromCMYK(cmyk);
 }
 
+RGB::RGB(const HSL& hsl)
+{
+    fromHSL(hsl);
+}
+
 RGB::RGB(std::string hex)
 {
-    fromhex(hex, false);
+    fromHEX(hex, false);
 }
 
 bool RGB::operator==(const RGB& other) const
@@ -141,37 +146,29 @@ RGB RGB::operator%(const RGB& other)
 
 RGB RGB::dump()
 {
-    char txt[128];
+    char txt[32];
     memset(txt, 0, sizeof(txt));
-    CMYK cmyk = toCMYK();
-    sprintf(txt, "RGB(%03d,%03d,%03d) HEX(%s) CMYK(%.03f,%.03f,%.03f,%.03f)",
-            r, g, b,
-            tohex().c_str(),
-            cmyk.c, cmyk.m, cmyk.y, cmyk.k);
+    sprintf(txt, "RGB(%03d,%03d,%03d) HEX(%s)", r, g, b, toHEX().c_str());
     std::cout << txt << std::endl;
     return *this;
 }
 
-RGBA RGB::toRGBA()
-{
-    return RGBA(r,g,b,RGB::MAX);
-}
-
 RGB RGB::fromRGBA(const RGBA& rgba)
 {
-    return RGB(rgba);
+    return *this = RGB(rgba);
 }
 
-const std::string RGB::tohex()
+RGB RGB::fromCMYK(const CMYK& cmyk)
 {
-    std::string s_rgb("");
-    s_rgb.append(StringUtils::hex02(red  ()));
-    s_rgb.append(StringUtils::hex02(green()));
-    s_rgb.append(StringUtils::hex02(blue ()));
-    return s_rgb;
+    return *this = CMYK(cmyk).toRGB();
 }
 
-RGB RGB::fromhex(std::string hex, bool bCheckHex)
+RGB RGB::fromHSL(const HSL& hsl)
+{
+    return *this = HSL(hsl).toRGB();
+}
+
+RGB RGB::fromHEX(std::string hex, bool bCheckHex)
 {
     clear();
     if(bCheckHex && !StringUtils::checkhex(hex)) return *this;
@@ -191,17 +188,28 @@ RGB RGB::fromhex(std::string hex, bool bCheckHex)
     return *this;
 }
 
+RGBA RGB::toRGBA()
+{
+    return RGBA(*this);
+}
+
 CMYK RGB::toCMYK()
 {
     return CMYK(*this);
 }
 
-RGB RGB::fromCMYK(const CMYK& cmyk)
+HSL RGB::toHSL()
 {
-    r = 255 * (1.0f - cmyk.c) * (1.0f - cmyk.k);
-    g = 255 * (1.0f - cmyk.m) * (1.0f - cmyk.k);
-    b = 255 * (1.0f - cmyk.y) * (1.0f - cmyk.k);
-    return *this;
+    return HSL(*this);
+}
+
+const std::string RGB::toHEX()
+{
+    std::string s_rgb("");
+    s_rgb.append(StringUtils::hex02(red  ()));
+    s_rgb.append(StringUtils::hex02(green()));
+    s_rgb.append(StringUtils::hex02(blue ()));
+    return s_rgb;
 }
 
 /**

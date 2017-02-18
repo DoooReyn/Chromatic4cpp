@@ -26,6 +26,11 @@ struct HSL {
     /* constructor */
     HSL();
     HSL(t_hsl_hue _h, t_hsl_saturation _s, t_hsl_lightness _l);
+    HSL(const HSL& other);
+    HSL(const RGB& rgb);
+    HSL(const RGBA& rgba);
+    HSL(const CMYK& cmyk);
+    HSL(const std::string hex);
     
     /* operator */
     bool operator == (const HSL& other) const;
@@ -156,14 +161,14 @@ struct HSL {
     }
     
     /* convertor */
-    RGB toRGB();
     HSL fromRGB(const RGB& rgb);
-    RGBA toRGBA();
     HSL fromRGBA(const RGBA& rgba);
-    std::string tohex();
-    HSL fromhex(std::string hex);
-    CMYK toCMYK();
     HSL fromCMYK(const CMYK& cmyk);
+    HSL fromHEX(std::string hex);
+    RGB  toRGB();
+    RGBA toRGBA();
+    CMYK toCMYK();
+    std::string toHEX();
     
     
     /* constants */

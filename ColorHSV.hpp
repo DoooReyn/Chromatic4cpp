@@ -9,6 +9,16 @@
 #ifndef ColorHSV_hpp
 #define ColorHSV_hpp
 
-#include <stdio.h>
+#include <math.h>
+
+struct RGB;
+struct RGBA;
+struct CMYK;
+struct HSL;
+
+struct HSV {
+    
+};
+
 
 #endif /* ColorHSV_hpp */

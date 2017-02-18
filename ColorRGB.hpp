@@ -14,6 +14,7 @@
 // forward declaration
 struct RGBA;
 struct CMYK;
+struct HSL;
 
 struct RGB
 {
@@ -27,9 +28,10 @@ public:
     /* constructor */
     RGB();
     RGB(t_rgb _r, t_rgb _g, t_rgb _b);
-    RGB(const RGB &rgb);
+    RGB(const RGB & rgb);
     RGB(const RGBA& rgba);
     RGB(const CMYK& cmyk);
+    RGB(const HSL&  hsl);
     RGB(std::string hex);
     
     
@@ -128,10 +130,12 @@ public:
     // convertor
     RGBA toRGBA();
     RGB fromRGBA(const RGBA& rgba);
-    const std::string tohex();
-    RGB fromhex(std::string hex, bool bCheckHex=false);
+    const std::string toHEX();
+    RGB fromHEX(std::string hex, bool bCheckHex=false);
     CMYK toCMYK();
     RGB fromCMYK(const CMYK& cmyk);
+    HSL toHSL();
+    RGB fromHSL(const HSL& hsl);
     
     /* constants */
     static const t_rgb MIN;

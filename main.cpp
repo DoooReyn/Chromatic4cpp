@@ -37,14 +37,14 @@ void RGB_TestCase() {
     std::cout << std::endl << "=> use divide:" << std::endl;
     (case0.divide(2).dump());
 
-    std::cout << std::endl << "=> from hex string(do check, this case will fail for invalid hex string):" << std::endl;
-    case0.fromhex("80aF*U", true).dump();
+    std::cout << std::endl << "=> from hex string(do check):" << std::endl;
+    case0.fromHEX("80aF*U", true).dump();
     
-    std::cout << std::endl << "=> from hex string(don't do check, will always succeed):" << std::endl;
-    case0.fromhex("80aF*U", false).dump();
+    std::cout << std::endl << "=> from hex string(do not check):" << std::endl;
+    case0.fromHEX("80aF*U", false).dump();
     
     std::cout << std::endl << "=> to hex string:" << std::endl;
-    std::cout << case0.tohex() << std::endl;
+    std::cout << case0.toHEX() << std::endl;
     
     std::cout << std::endl << "=> from/to RGBA:" << std::endl;
     case0.fromRGBA(case0.toRGBA().dump()).dump();
@@ -55,6 +55,12 @@ void RGB_TestCase() {
     std::cout << std::endl << "=> RED + LIME = YELLOW : " << std::endl;
     (RGB(Chromatic::RED) + RGB(Chromatic::LIME)).dump();
     RGB(Chromatic::YELLOW).dump();
+    
+    std::cout << std::endl << "=> convertor: " << std::endl;
+    RGB rgb = RGB(Chromatic::ORCHID).dump();
+    rgb.toRGBA().dump();
+    rgb.toCMYK().dump();
+    rgb.toHSL().dump();
     
     std::cout << "==================== RGB TestCase End =====================" << std::endl << std::endl;
 }
@@ -87,36 +93,44 @@ void RGBA_TestCase() {
     std::cout << std::endl << "=> use divide:" << std::endl;
     (case0.divide(2).dump());
     
-    std::cout << std::endl << "=> from hex string (do check, this case will fail for invalid hex string):" << std::endl;
-    case0.fromhex("80aF*UE", true).dump();
+    std::cout << std::endl << "=> from hex string (do check):" << std::endl;
+    case0.fromHEX("80aF*UE", true).dump();
     
-    std::cout << std::endl << "=> from hex string (don't do check, will always succeed):" << std::endl;
-    case0.fromhex("80aF*UE", false).dump();
+    std::cout << std::endl << "=> from hex string (do not check):" << std::endl;
+    case0.fromHEX("80aF*UE", false).dump();
     
     std::cout << std::endl << "=> to hex string:" << std::endl;
-    std::cout << case0.tohex() << std::endl;
+    std::cout << case0.toHEX() << std::endl;
     
     std::cout << std::endl << "=> from/to RGB:" << std::endl;
     case0.fromRGB(case0.toRGB().dump()).dump();
     
     std::cout << std::endl << "=> clear with:" << std::endl;
     case0.clear(255).dump();
+    
+    std::cout << std::endl << "=> convertor: " << std::endl;
+    RGBA rgba = RGBA().fromRGB(RGB(Chromatic::ORCHID)).dump();
+    rgba.toRGB().dump();
+    rgba.toCMYK().dump();
+    rgba.toHSL().dump();
     std::cout << "=================== RGBA TestCase End =====================" << std::endl << std::endl;
 }
 
 void CMYK_TestCase() {
     std::cout << "=================== CMYK TestCase Start ===================" << std::endl;
-    RGBA rgba = RGBA(Chromatic::BURLYWOOD);
-    CMYK case0 = CMYK(rgba);
-    rgba.fromCMYK(case0).dump();
-    case0.dump();
+    CMYK cmyk = CMYK().fromRGB(RGB(Chromatic::ORCHID)).dump();
+    cmyk.toRGB().dump();
+    cmyk.toHSL().dump();
+    cmyk.toRGBA().dump();
     std::cout << "=================== CMYK TestCase END =====================" << std::endl << std::endl;
 }
 
 void HSL_TestCase() {
     std::cout << "==================== HSL TestCase Start ===================" << std::endl;
-    HSL hsl = HSL(120, 0.5f, 0.4f).dump();
-    hsl.fromRGB(RGB(33,99,33)).dump();
+    HSL hsl = HSL().fromRGB(RGB(Chromatic::ORCHID)).dump();
+    hsl.toRGB().dump();
+    hsl.toCMYK().dump();
+    hsl.toRGBA().dump();
     std::cout << "==================== HSL TestCase Start ===================" << std::endl << std::endl;
 }
 
