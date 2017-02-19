@@ -15,17 +15,21 @@
 #include <clocale>
 #include <cctype>
 #include <algorithm>
+using namespace std;
+
 
 class StringUtils {
 public:
-    static std::string itoa(int value, int base);
-    static const std::string fill02(std::string h);
-    static const std::string fill03(int v);
+    static string itoa(int value, int base);
+    static const string fill02(string h);
+    static const string fill03(int v);
     static const int hex01(char hex);
-    static const std::string hex02(int v);
-    static bool checkhex(std::string hex);
-    static std::string touppercase(std::string &s);
-    static std::string tolowercase(std::string &s);
+    static const string hex02(int v);
+    static bool checkhex(string hex);
+    static string touppercase(string &s);
+    static string tolowercase(string &s);
+    static int hexStr2int(string hex);
+    static int hexChar2Int(char ch);
 };
 
 #endif /* StringUtils_hpp */
