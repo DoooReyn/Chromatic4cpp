@@ -195,6 +195,30 @@ void ColorRandom_TestCase() {
     cout << "!!! Color Random TestCase End #>" << endl << endl;
 }
 
+void CompareColor_TestCase() {
+    cout << "<# Compare Color With Mode Start" << endl;
+    
+    RGB  c1 = RGB(LIMEGREEN);
+    RGBA c2 = RGBA(LIMEGREEN);
+    CMYK c3 = CMYK(LIMEGREEN);
+    HSL  c4 = HSL(LIMEGREEN);
+    HSV  c5 = HSV(LIMEGREEN);
+    cout << "[Compare Color] LIMEGREEN: HEX(#32CD32)" << endl;
+    cout << "[Compare Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV " << endl;
+    cout << "c1 == c2 ? " << (equals(c1, c2) ? "True" : "False") << endl;
+    cout << "c1 == c3 ? " << (equals(c1, c3) ? "True" : "False") << endl;
+    cout << "c1 == c4 ? " << (equals(c1, c4) ? "True" : "False") << endl;
+    cout << "c1 == c5 ? " << (equals(c1, c5) ? "True" : "False") << endl;
+    cout << "c2 == c3 ? " << (equals(c2, c3) ? "True" : "False") << endl;
+    cout << "c2 == c4 ? " << (equals(c2, c4) ? "True" : "False") << endl;
+    cout << "c2 == c5 ? " << (equals(c2, c5) ? "True" : "False") << endl;
+    cout << "c3 == c4 ? " << (equals(c3, c4) ? "True" : "False") << endl;
+    cout << "c3 == c5 ? " << (equals(c3, c5) ? "True" : "False") << endl;
+    cout << "c4 == c5 ? " << (equals(c4, c5) ? "True" : "False") << endl;
+    
+    cout << "!!! Compare Color With Mode End #>" << endl << endl;
+}
+
 int main() {
     RGB_TestCase();
     RGBA_TestCase();
@@ -204,6 +228,7 @@ int main() {
     RGB_Blend_TestCase();
     RGBA_Blend_TestCase();
     ColorRandom_TestCase();
-    
+    CompareColor_TestCase();
+
 }
 
