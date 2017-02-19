@@ -48,7 +48,7 @@ RGB::RGB(const HSV& hsv)
 
 RGB::RGB(string hex)
 {
-    fromHEX(hex, false);
+    fromHEX(hex, true);
 }
 
 bool RGB::operator==(const RGB& other) const
@@ -272,11 +272,10 @@ HSV RGB::toHSV()
 
 const string RGB::toHEX()
 {
-    string s_rgb("");
-    s_rgb.append(StringUtils::hex02(red  ()));
-    s_rgb.append(StringUtils::hex02(green()));
-    s_rgb.append(StringUtils::hex02(blue ()));
-    return s_rgb;
+    char txt[8];
+    memset(txt, 0 , sizeof(txt));
+    sprintf(txt, "#%02X%02X%02X", r, g, b);
+    return string(txt);
 }
 
 /**

@@ -32,6 +32,7 @@ struct HSL {
     HSL(const RGB& rgb);
     HSL(const RGBA& rgba);
     HSL(const CMYK& cmyk);
+    HSL(const HSV& hsv);
     HSL(const string hex);
     
     /* operator */

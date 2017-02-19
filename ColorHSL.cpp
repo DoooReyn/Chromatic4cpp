@@ -42,6 +42,11 @@ HSL::HSL(const CMYK& cmyk)
     fromCMYK(cmyk);
 }
 
+HSL::HSL(const HSV& hsv)
+{
+    fromHSV(hsv);
+}
+
 HSL::HSL(const string hex)
 {
     fromHEX(hex);
@@ -159,7 +164,7 @@ HSL HSL::fromRGB(const RGB& rgb) {
     }
     if(l == 0 || cmax == cmin) {
         s = 0;
-    } else if ( 0 < l <= 0.5f) {
+    } else if ( 0 < l && l <= 0.5f) {
         s = delta / 2 / l;
     } else if ( l > 0.5f ) {
         s = delta / 2 / (1-l);
