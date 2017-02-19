@@ -16,8 +16,8 @@
 #define MIN(a,b) (a > b ? b : a)
 #define MAX(a,b) (a > b ? a : b)
 
-#define max03f(f1, f2, f3) MAX(MAX(f1, f2), f3)
-#define min03f(f1, f2, f3) MIN(MIN(f1, f2), f3)
+#define max03(f1, f2, f3) MAX(MAX(f1, f2), f3)
+#define min03(f1, f2, f3) MIN(MIN(f1, f2), f3)
 
 #define GET_ARRAY_LEN(array,len){len = (sizeof(array) / sizeof(array[0]));}
 

@@ -147,8 +147,8 @@ HSL HSL::fromRGB(const RGB& rgb) {
     float r = rgb.r * 1.f / RGB::MAX;
     float g = rgb.g * 1.f / RGB::MAX;
     float b = rgb.b * 1.f / RGB::MAX;
-    float cmax = max03f(r, g, b);
-    float cmin = min03f(r, g, b);
+    float cmax = max03(r, g, b);
+    float cmin = min03(r, g, b);
     float delta = cmax - cmin;
     l = (cmax + cmin) / 2.f;
     if(cmax == cmin) {

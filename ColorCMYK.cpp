@@ -22,13 +22,6 @@ CMYK::CMYK(const CMYK& cmyk)
 : c(cmyk.c), m(cmyk.m), y(cmyk.y), k(cmyk.k)
 {}
 
-t_cmyk min03(t_cmyk v1, t_cmyk v2, t_cmyk v3)
-{
-    t_cmyk tmp = MIN(v1,v2);
-    tmp = MIN(tmp, v3);
-    return tmp;
-}
-
 CMYK::CMYK(const RGB& rgb)
 {
     fromRGB(rgb);
