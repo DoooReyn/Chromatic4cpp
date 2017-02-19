@@ -15,18 +15,18 @@ using namespace std;
 void RGB_TestCase() {
     RGB case0 = RGB(Chromatic::REBECCAPURPLE);
     
-    std::cout << "==================== RGB TestCase Start ===================" << std::endl;
+    cout << "==================== RGB TestCase Start ===================" << endl;
     
-    std::cout << "=> RGB original data:" << std::endl;
+    cout << "=> RGB original data:" << endl;
     case0.dump();
     
-    std::cout << std::endl << "=> single operator:" << std::endl;
+    cout << endl << "=> single operator:" << endl;
     (case0+1).dump();
     (case0-1).dump();
     (case0*2).dump();
     (case0/2).dump();
     (case0%15.f).dump();
-    std::cout << std::endl << "=> mixed  operator:" << std::endl;
+    cout << endl << "=> mixed  operator:" << endl;
     case0.clear(166);
     (case0+RGB(1,1,1)).dump();
     (case0-RGB(1,1,1)).dump();
@@ -34,55 +34,55 @@ void RGB_TestCase() {
     (case0/RGB(2,2,2)).dump();
     (case0%RGB(15,15,15)).dump();
     
-    std::cout << std::endl << "=> use scale:" << std::endl;
+    cout << endl << "=> use scale:" << endl;
     (case0.scale(10.8).dump());
     
-    std::cout << std::endl << "=> use divide:" << std::endl;
+    cout << endl << "=> use divide:" << endl;
     (case0.divide(2).dump());
 
-    std::cout << std::endl << "=> from hex string(do check):" << std::endl;
+    cout << endl << "=> from hex string(do check):" << endl;
     case0.fromHEX("80aF*U", true).dump();
     
-    std::cout << std::endl << "=> from hex string(do not check):" << std::endl;
+    cout << endl << "=> from hex string(do not check):" << endl;
     case0.fromHEX("80aF*U", false).dump();
     
-    std::cout << std::endl << "=> to hex string:" << std::endl;
-    std::cout << case0.toHEX() << std::endl;
+    cout << endl << "=> to hex string:" << endl;
+    cout << case0.toHEX() << endl;
     
-    std::cout << std::endl << "=> from/to RGBA:" << std::endl;
+    cout << endl << "=> from/to RGBA:" << endl;
     case0.fromRGBA(case0.toRGBA().dump()).dump();
     
-    std::cout << std::endl << "=> clear with:" << std::endl;
+    cout << endl << "=> clear with:" << endl;
     case0.clear(255).dump();
     
-    std::cout << std::endl << "=> RED + LIME = YELLOW : " << std::endl;
+    cout << endl << "=> RED + LIME = YELLOW : " << endl;
     (RGB(Chromatic::RED) + RGB(Chromatic::LIME)).dump();
     RGB(Chromatic::YELLOW).dump();
     
-    std::cout << std::endl << "=> convertor: " << std::endl;
+    cout << endl << "=> convertor: " << endl;
     RGB rgb = RGB().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     rgb.toRGBA().dump();
     rgb.toCMYK().dump();
     rgb.toHSL().dump();
     
-    std::cout << "==================== RGB TestCase End =====================" << std::endl << std::endl;
+    cout << "==================== RGB TestCase End =====================" << endl << endl;
 }
 
 
 void RGBA_TestCase() {
-    std::cout << "=================== RGBA TestCase Start ===================" << std::endl;
+    cout << "=================== RGBA TestCase Start ===================" << endl;
     RGBA case0 = RGBA(Chromatic::INDIGO);
     
-    std::cout << "=> RGBA original data:" << std::endl;
+    cout << "=> RGBA original data:" << endl;
     case0.dump();
     
-    std::cout << std::endl << "=> single operator:" << std::endl;
+    cout << endl << "=> single operator:" << endl;
     (case0+1).dump();
     (case0-1).dump();
     (case0*2).dump();
     (case0/2).dump();
     (case0%15.f).dump();
-    std::cout << std::endl << "=> mixed  operator:" << std::endl;
+    cout << endl << "=> mixed  operator:" << endl;
     case0.clear(166);
     (case0+RGBA(1,1,1,1)).dump();
     (case0-RGBA(1,1,1,1)).dump();
@@ -90,91 +90,92 @@ void RGBA_TestCase() {
     (case0/RGBA(2,2,2,2)).dump();
     (case0%RGBA(15,15,15,15)).dump();
     
-    std::cout << std::endl << "=> use scale:" << std::endl;
+    cout << endl << "=> use scale:" << endl;
     (case0.scale(10.8).dump());
     
-    std::cout << std::endl << "=> use divide:" << std::endl;
+    cout << endl << "=> use divide:" << endl;
     (case0.divide(2).dump());
     
-    std::cout << std::endl << "=> from hex string (do check):" << std::endl;
+    cout << endl << "=> from hex string (do check):" << endl;
     case0.fromHEX("80aF*UE", true).dump();
     
-    std::cout << std::endl << "=> from hex string (do not check):" << std::endl;
+    cout << endl << "=> from hex string (do not check):" << endl;
     case0.fromHEX("80aF*UE", false).dump();
     
-    std::cout << std::endl << "=> to hex string:" << std::endl;
-    std::cout << case0.toHEX() << std::endl;
+    cout << endl << "=> to hex string:" << endl;
+    cout << case0.toHEX() << endl;
     
-    std::cout << std::endl << "=> from/to RGB:" << std::endl;
+    cout << endl << "=> from/to RGB:" << endl;
     case0.fromRGB(case0.toRGB().dump()).dump();
     
-    std::cout << std::endl << "=> clear with:" << std::endl;
+    cout << endl << "=> clear with:" << endl;
     case0.clear(255).dump();
     
-    std::cout << std::endl << "=> convertor: " << std::endl;
+    cout << endl << "=> convertor: " << endl;
     RGBA rgba = RGBA().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     rgba.toRGB().dump();
     rgba.toCMYK().dump();
     rgba.toHSL().dump();
-    std::cout << "=================== RGBA TestCase End =====================" << std::endl << std::endl;
+    cout << "=================== RGBA TestCase End =====================" << endl << endl;
 }
 
 void CMYK_TestCase() {
-    std::cout << "=================== CMYK TestCase Start ===================" << std::endl;
+    cout << "=================== CMYK TestCase Start ===================" << endl;
     CMYK cmyk = CMYK().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     cmyk.toRGB().dump();
     cmyk.toHSL().dump();
     cmyk.toRGBA().dump();
-    std::cout << "=================== CMYK TestCase END =====================" << std::endl << std::endl;
+    cout << "=================== CMYK TestCase END =====================" << endl << endl;
 }
 
 void HSL_TestCase() {
-    std::cout << "==================== HSL TestCase Start ===================" << std::endl;
+    cout << "==================== HSL TestCase Start ===================" << endl;
     HSL hsl = HSL().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     hsl.toRGB().dump();
     hsl.toCMYK().dump();
     hsl.toRGBA().dump();
-    std::cout << "==================== HSL TestCase Start ===================" << std::endl << std::endl;
+    cout << "==================== HSL TestCase Start ===================" << endl << endl;
 }
 
 void HSV_TestCase() {
-    std::cout << "==================== HSL TestCase Start ===================" << std::endl;
+    cout << "==================== HSL TestCase Start ===================" << endl;
     HSV hsv = HSV().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     hsv.toRGB().dump();
     hsv.toCMYK().dump();
     hsv.toRGBA().dump();
-    std::cout << "==================== HSL TestCase End ===================" << std::endl << std::endl;
+    cout << "==================== HSL TestCase End ===================" << endl << endl;
 }
 
 
 void RGB_Blend_TestCase() {
-    std::cout << "==================== RGB Blend TestCase Start ===================" << std::endl;
+    cout << "==================== RGB Blend TestCase Start ===================" << endl;
     bool bBlendRedLime = RGB(RED).blend(LIME) == YELLOW;
     cout << "Red blend Lime = Yellow ? ";
     bBlendRedLime ? cout << "True" : cout << "False";
-    cout << std::endl;
+    cout << endl;
     
     bBlendRedLime = RGB(RED).blend(LIME) + RGB(YELLOW).opposite() == WHITE;
     cout << "Red blend Green = Yellow ? ";
     bBlendRedLime ? cout << "True" : cout << "False";
-    cout << std::endl;
-    std::cout << "==================== RGB Blend TestCase End   ===================" << std::endl << std::endl;
+    cout << endl;
+    cout << "==================== RGB Blend TestCase End   ===================" << endl << endl;
 }
 
 void RGBA_Blend_TestCase() {
-    RGBA c1 = RGBA(235, 152, 80, 0.6f*255).dump();
-    RGBA c2 = RGBA(234, 97, 124, 0.8f*255).dump();
-//    RGBA c3 = c1.blend(c2).dump();
-    c2.blend(c1).dump();
+    cout << "==================== RGBA Blend TestCase Start ===================" << endl;
+    RGBA c1 = RGBA().fromAlphaF(235, 152, 80, 0.6f).dump();
+    RGBA c2 = RGBA().fromAlphaF(234, 97, 124, 0.8f).dump();
+    c1.blend(c2).dump();
+    cout << "==================== RGBA Blend TestCase End =====================" << endl;
 }
 
 int main() {
-//    RGB_TestCase();
-//    RGBA_TestCase();
-//    CMYK_TestCase();
-//    HSL_TestCase();
-//    HSV_TestCase();
-//    RGB_Blend_TestCase();
+    RGB_TestCase();
+    RGBA_TestCase();
+    CMYK_TestCase();
+    HSL_TestCase();
+    HSV_TestCase();
+    RGB_Blend_TestCase();
     RGBA_Blend_TestCase();
 }
 
