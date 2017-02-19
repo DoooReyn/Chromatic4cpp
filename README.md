@@ -20,12 +20,12 @@
 - `divide` : 同除法
 - `mod` : 同取模
 - `clear` : 清空色值
-- `check` : 检查输入的色值是否有效（结果会获得有效的色值）
-- `dump` : 打印色值 *[输出自身的格式和十六进制格式]*
-- `red` : 获取/设置 r 位色值
-- `green` : 获取/设置 RGB 模式下的 g 位色值
-- `blue` : 获取/设置 RGB 模式下的 b 位色值
-- `alpha` : 获取/设置 RGB 模式下的 a 位色值
+- `check` : 检查输入的色值是否有效，如果无效，则使用默认规则转换为有效色值
+- `dump` : 打印原始色值和十六进制数值
+- `red` : 获取/设置 RGB(A) 模式下 r 位色值
+- `green` : 获取/设置 RGB(A) 模式下的 g 位色值
+- `blue` : 获取/设置 RGB(A) 模式下的 b 位色值
+- `alpha` : 获取/设置 RGBA 模式下的 a 位色值
 - `cyan` : 获取/设置 CMYK 模式下的 c 位色值
 - `yellow` : 获取/设置 CMYK 模式下的 y 位色值
 - `magenta` : 获取/设置 CMYK 模式下的 m 位色值
@@ -44,10 +44,9 @@
 - `toHEX` : 转换为十六进制模式
 - `blend` : 混合色值计算（色值叠加计算，目前只支持 RGB 和 RGBA）
 - `opposite` : 获取 RGB(A) 色值的相反色
+- `random` : 获取随机色值
 - `Chromatic::equals` : 宽松比对两种色彩模式的色值是否相等
 - `Chromatic::sequals` : 严格比对两种色彩模式的色值是否相等
-- `random` : 获取随机色值
-
 
 ## 二、测试用例
 
@@ -61,7 +60,7 @@
 //
 #include <stdio.h>
 #include <iostream>
-#include "Chromatics/Chromatics.hpp"
+#include "Chromatics.hpp"
 #include "StringUtils.hpp"
 using namespace Chromatic;
 using namespace std;
@@ -70,7 +69,7 @@ void RGB_TestCase() {
     cout << "<# RGB TestCase Start" << endl;
     
     cout << "=> RGB original data:" << endl;
-    RGB case0 = RGB(Chromatic::REBECCAPURPLE);
+    RGB case0 = RGB(REBECCAPURPLE);
     case0.dump();
     
     cout << endl << "=> single operator:" << endl;
@@ -109,11 +108,11 @@ void RGB_TestCase() {
     case0.clear(255).dump();
     
     cout << endl << "=> RED + LIME = YELLOW : " << endl;
-    (RGB(Chromatic::RED) + RGB(Chromatic::LIME)).dump();
-    RGB(Chromatic::YELLOW).dump();
+    (RGB(RED) + RGB(LIME)).dump();
+    RGB(YELLOW).dump();
     
     cout << endl << "=> convertor: " << endl;
-    RGB rgb = RGB().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    RGB rgb = RGB().fromHEX(ANTIQUEWHITE).dump();
     rgb.toRGBA().dump();
     rgb.toCMYK().dump();
     rgb.toHSL().dump();
@@ -125,7 +124,7 @@ void RGB_TestCase() {
 void RGBA_TestCase() {
     cout << "<# RGBA TestCase Start" << endl;
     
-    RGBA case0 = RGBA(Chromatic::INDIGO);
+    RGBA case0 = RGBA(INDIGO);
     
     cout << "=> RGBA original data:" << endl;
     case0.dump();
@@ -166,7 +165,7 @@ void RGBA_TestCase() {
     case0.clear(255).dump();
     
     cout << endl << "=> convertor: " << endl;
-    RGBA rgba = RGBA().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    RGBA rgba = RGBA().fromHEX(ANTIQUEWHITE).dump();
     rgba.toRGB().dump();
     rgba.toCMYK().dump();
     rgba.toHSL().dump();
@@ -177,7 +176,7 @@ void RGBA_TestCase() {
 void CMYK_TestCase() {
     cout << "<# CMYK TestCase Start " << endl;
     
-    CMYK cmyk = CMYK().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    CMYK cmyk = CMYK().fromHEX(ANTIQUEWHITE).dump();
     cmyk.toRGB().dump();
     cmyk.toHSL().dump();
     cmyk.toRGBA().dump();
@@ -188,7 +187,7 @@ void CMYK_TestCase() {
 void HSL_TestCase() {
     cout << "<# HSL TestCase Start " << endl;
     
-    HSL hsl = HSL().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    HSL hsl = HSL().fromHEX(ANTIQUEWHITE).dump();
     hsl.toRGB().dump();
     hsl.toCMYK().dump();
     hsl.toRGBA().dump();
@@ -198,7 +197,7 @@ void HSL_TestCase() {
 
 void HSV_TestCase() {
     cout << "<# HSV TestCase Start" << endl;
-    HSV hsv = HSV().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    HSV hsv = HSV().fromHEX(ANTIQUEWHITE).dump();
     hsv.toRGB().dump();
     hsv.toCMYK().dump();
     hsv.toRGBA().dump();
