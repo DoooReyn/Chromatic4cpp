@@ -46,7 +46,7 @@ RGB::RGB(const HSV& hsv)
     fromHSV(hsv);
 }
 
-RGB::RGB(std::string hex)
+RGB::RGB(string hex)
 {
     fromHEX(hex, false);
 }
@@ -61,7 +61,17 @@ bool RGB::operator!=(const RGB& other) const
     return !(*this == other);
 }
 
-RGB RGB::operator+(const t_rgb cv) 
+bool RGB::operator==(const string hex) const
+{
+    return (*this == RGB(hex));
+}
+
+bool RGB::operator!=(const string hex) const
+{
+    return (*this != RGB(hex));
+}
+
+RGB RGB::operator+(const t_rgb cv)
 {
     r = check((int)(r + cv));
     g = check((int)(g + cv));
@@ -149,12 +159,46 @@ RGB RGB::operator%(const RGB& other)
     return *this;
 }
 
+RGB RGB::operator|(const RGB& other)
+{
+    r |= other.r;
+    g |= other.g;
+    b |= other.b;
+    return *this;
+}
+
+RGB RGB::operator&(const RGB& other)
+{
+    r &= other.r;
+    g &= other.g;
+    b &= other.b;
+    return *this = *this + other;
+}
+
+RGB RGB::opposite() {
+    return *this = RGB(Chromatic::WHITE) - *this;
+}
+
 RGB RGB::dump()
 {
     char txt[32];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "RGB(%03d,%03d,%03d) HEX(%s)", r, g, b, toHEX().c_str());
-    std::cout << txt << std::endl;
+    cout << txt << endl;
+    return *this;
+}
+
+RGB RGB::blend(const string hex)
+{
+    return *this | RGB(hex);
+}
+
+RGB RGB::blend(const string* hexArr, int size)
+{
+    int i = 0;
+    while (size-- > 0) {
+        *this | RGB(hexArr[i++]);
+    }
     return *this;
 }
 
@@ -178,14 +222,14 @@ RGB RGB::fromHSV(const HSV& hsv)
     return *this = HSV(hsv).toRGB();
 }
 
-RGB RGB::fromHEX(std::string hex, bool bCheckHex)
+RGB RGB::fromHEX(string hex, bool bCheckHex)
 {
     clear();
     if(bCheckHex && !StringUtils::checkhex(hex)) return *this;
     
     unsigned long unHexSize = hex.size();
     unsigned long unSize = (unHexSize / 2) + (unHexSize % 2 == 0 ? 0 : 1);
-    std::vector<t_rgb*> vecRGBA;
+    vector<t_rgb*> vecRGBA;
     vecRGBA.clear();
     vecRGBA.push_back(&r);
     vecRGBA.push_back(&g);
@@ -218,9 +262,9 @@ HSV RGB::toHSV()
     return HSV(*this);
 }
 
-const std::string RGB::toHEX()
+const string RGB::toHEX()
 {
-    std::string s_rgb("");
+    string s_rgb("");
     s_rgb.append(StringUtils::hex02(red  ()));
     s_rgb.append(StringUtils::hex02(green()));
     s_rgb.append(StringUtils::hex02(blue ()));

@@ -10,6 +10,8 @@
 #define ColorCMYK_hpp
 
 #include "BaseMath.hpp"
+#include "BaseTypes.hpp"
+using namespace std;
 
 struct RGB;
 struct RGBA;
@@ -30,7 +32,7 @@ struct CMYK {
     CMYK(const RGBA& rgba);
     CMYK(const HSL& hsl);
     CMYK(const HSV& hsv);
-    CMYK(std::string hex);
+    CMYK(string hex);
     
     
     /* operator */
@@ -136,12 +138,12 @@ struct CMYK {
     CMYK fromRGBA(const RGBA& rgba);
     CMYK fromHSL(const HSL& hsl);
     CMYK fromHSV(const HSV& hsv);
-    CMYK fromHEX(const std::string hex);
+    CMYK fromHEX(const string hex);
     RGB  toRGB();
     RGBA toRGBA();
     HSL  toHSL();
     HSV  toHSV();
-    const std::string toHEX();
+    const string toHEX();
     
     
     /* constants */

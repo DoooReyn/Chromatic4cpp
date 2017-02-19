@@ -10,10 +10,11 @@
 #define ColorRGBA_hpp
 
 #include "BaseMath.hpp"
+#include "BaseTypes.hpp"
+using namespace std;
 
 struct RGB;
 struct CMYK;
-
 
 struct RGBA  {
 public:
@@ -32,12 +33,14 @@ public:
     RGBA(const CMYK& cmyk);
     RGBA(const HSL&  hsl);
     RGBA(const HSV&  hsv);
-    RGBA(std::string hex);
+    RGBA(string hex);
     
     
     /* operator */
     bool operator == (const RGBA& other) const;
     bool operator != (const RGBA& other) const;
+    RGBA operator |  (const RGBA& other);
+    RGBA operator |  (const string hex);
     RGBA operator +  (const t_rgba cv);
     RGBA operator +  (const RGBA& other);
     RGBA operator -  (const t_rgba cv);
@@ -93,13 +96,16 @@ public:
         return *this;
     }
     
-    t_rgba check(t_cmyk n_rgb) {
+    t_rgba check(d_rgba n_rgb) {
         if( n_rgb < 0) n_rgb = 0;
         if( n_rgb > 255) n_rgb = 255;
         return (t_rgba)n_rgb;
     }
     
     RGBA dump();
+    RGBA opposite();
+    RGBA blend(const string hex);
+    RGBA blend(const RGBA& other);
 
     
     /* getter/setter */
@@ -134,16 +140,17 @@ public:
     }
     
     /* convertor */
+    RGBA fromAlphaF(t_rgba _r, t_rgba _g, t_rgba _b, float _a);
     RGBA fromRGB(const RGB& rgb);
     RGBA fromCMYK(const CMYK& cmyk);
     RGBA fromHSL(const HSL& hsl);
     RGBA fromHSV(const HSV& hsv);
-    RGBA fromHEX(std::string hex, bool bCheckHex=false);
+    RGBA fromHEX(string hex, bool bCheckHex=false);
     RGB  toRGB();
     CMYK toCMYK();
     HSL  toHSL();
     HSV  toHSV();
-    std::string toHEX();
+    string toHEX();
     
     
     

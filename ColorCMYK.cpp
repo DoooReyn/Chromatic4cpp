@@ -46,7 +46,7 @@ CMYK::CMYK(const HSV& hsv) {
     fromHSV(hsv);
 }
 
-CMYK::CMYK(std::string hex) {
+CMYK::CMYK(string hex) {
     fromHEX(hex);
 }
 
@@ -167,7 +167,7 @@ CMYK CMYK::fromHSL(const HSL& hsl) {
     return *this = RGB(hsl).toCMYK();
 }
 
-CMYK CMYK::fromHEX(std::string hex) {
+CMYK CMYK::fromHEX(string hex) {
     return *this = RGB(hex).toCMYK();
 }
 
@@ -194,11 +194,12 @@ HSV CMYK::toHSV() {
     return toRGB().toHSV();
 }
 
-const std::string CMYK::toHEX() {
+const string CMYK::toHEX() {
     return toRGB().toHEX();
 }
 
+
+/* constants */
 const t_cmyk CMYK::MIN = 0.000f;
 const t_cmyk CMYK::MID = 0.500f;
 const t_cmyk CMYK::MAX = 1.000f;
-

@@ -7,7 +7,6 @@
 //
 
 #include "Chromatics.hpp"
-#include <iostream>
 
 HSV::HSV()
 : h(HSV::MIN_HUE)
@@ -43,7 +42,7 @@ HSV::HSV(const HSL& hsl)
     fromHSL(hsl);
 }
 
-HSV::HSV(const std::string hex)
+HSV::HSV(const string hex)
 {
     fromHEX(hex);
 }
@@ -127,7 +126,7 @@ HSV HSV::dump() {
     char txt[32];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "HSV(%03d,%.03f,%.03f) HEX(%s)", h, s, v, toHEX().c_str());
-    std::cout << txt << std::endl;
+    cout << txt << endl;
     return *this;
 }
 
@@ -173,7 +172,7 @@ HSV HSV::fromHSL(const HSL& hsl) {
     return *this;
 }
 
-HSV HSV::fromHEX(std::string hex) {
+HSV HSV::fromHEX(string hex) {
     return *this = RGB(hex).toHSV();
 }
 
@@ -213,7 +212,7 @@ HSL HSV::toHSL() {
     return toRGB().toHSL();
 }
 
-std::string HSV::toHEX() {
+string HSV::toHEX() {
     return toRGB().toHEX();
 }
 

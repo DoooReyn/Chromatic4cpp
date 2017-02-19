@@ -42,7 +42,7 @@ HSL::HSL(const CMYK& cmyk)
     fromCMYK(cmyk);
 }
 
-HSL::HSL(const std::string hex)
+HSL::HSL(const string hex)
 {
     fromHEX(hex);
 }
@@ -172,7 +172,7 @@ HSL HSL::fromHSV(const HSV &hsv) {
     return *this = RGB(hsv).toHSL();
 }
 
-HSL HSL::fromHEX(std::string hex) {
+HSL HSL::fromHEX(string hex) {
     return *this = RGB(hex).toHSL();
 }
 
@@ -212,7 +212,7 @@ HSV HSL::toHSV() {
     return toRGB().toHSV();
 }
 
-std::string HSL::toHEX() {
+string HSL::toHEX() {
     return toRGB().toHEX();
 }
 

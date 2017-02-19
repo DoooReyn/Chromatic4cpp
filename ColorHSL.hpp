@@ -10,8 +10,9 @@
 #define ColorHSL_hpp
 
 #include "BaseMath.hpp"
+#include "BaseTypes.hpp"
 #include <iostream>
-#include <math.h>
+using namespace std;
 
 struct RGB;
 struct RGBA;
@@ -31,7 +32,7 @@ struct HSL {
     HSL(const RGB& rgb);
     HSL(const RGBA& rgba);
     HSL(const CMYK& cmyk);
-    HSL(const std::string hex);
+    HSL(const string hex);
     
     /* operator */
     bool operator == (const HSL& other) const;
@@ -166,12 +167,12 @@ struct HSL {
     HSL fromRGBA(const RGBA& rgba);
     HSL fromCMYK(const CMYK& cmyk);
     HSL fromHSV(const HSV& hsv);
-    HSL fromHEX(std::string hex);
+    HSL fromHEX(string hex);
     RGB  toRGB();
     RGBA toRGBA();
     CMYK toCMYK();
     HSV  toHSV();
-    std::string toHEX();
+    string toHEX();
     
     
     /* constants */

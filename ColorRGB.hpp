@@ -10,8 +10,9 @@
 #define ColorRGB_hpp
 
 #include "BaseMath.hpp"
+#include "BaseTypes.hpp"
+using namespace std;
 
-// forward declaration
 struct RGBA;
 struct CMYK;
 struct HSL;
@@ -34,12 +35,16 @@ public:
     RGB(const CMYK& cmyk);
     RGB(const HSL&  hsl);
     RGB(const HSV&  hsv);
-    RGB(std::string hex);
+    RGB(string hex);
     
     
     /* operator */
     bool operator == (const RGB& other) const;
     bool operator != (const RGB& other) const;
+    bool operator == (const string hex) const;
+    bool operator != (const string hex) const;
+    RGB  operator |  (const RGB& other);
+    RGB  operator &  (const RGB& other);
     RGB  operator +  (const t_rgb cv);
     RGB  operator +  (const RGB& other);
     RGB  operator -  (const t_rgb cv);
@@ -55,8 +60,14 @@ public:
     bool equals(const RGB& other) {
         return (*this == other);
     }
+    bool equals(const string hex) {
+        return (*this == RGB(hex));
+    }
     bool nequals(const RGBA& other) {
         return (*this != other);
+    }
+    bool nequals(const string hex) {
+        return (*this != RGB(hex));
     }
     RGB add(t_rgb cv){
         return *this + cv;
@@ -88,6 +99,7 @@ public:
     RGB mod(const RGB& other) {
         return *this % other;
     }
+    RGB opposite();
     
     
     /* methods */
@@ -103,6 +115,9 @@ public:
         if( n_rgb > 255) n_rgb = 255;
         return (t_rgb)n_rgb;
     }
+    
+    RGB blend(const string hex);
+    RGB blend(const string* hexArr, int size=0);
     
     
     // getter/setter
@@ -134,12 +149,12 @@ public:
     RGB fromCMYK(const CMYK& cmyk);
     RGB fromHSL(const HSL& hsl);
     RGB fromHSV(const HSV& hsv);
-    RGB fromHEX(std::string hex, bool bCheckHex=false);
+    RGB fromHEX(string hex, bool bCheckHex=false);
     RGBA toRGBA();
     CMYK toCMYK();
     HSL  toHSL();
     HSV  toHSV();
-    const std::string toHEX();
+    const string toHEX();
     
     /* constants */
     static const t_rgb MIN;

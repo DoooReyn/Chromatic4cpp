@@ -5,9 +5,12 @@
 //  Created by Reyn-Mac on 2017/1/25.
 //  Copyright © 2017年 Reyn-Mac. All rights reserved.
 //
-
+#include <stdio.h>
 #include <iostream>
 #include "Chromatics/Chromatics.hpp"
+#include "StringUtils.hpp"
+using namespace Chromatic;
+using namespace std;
 
 void RGB_TestCase() {
     RGB case0 = RGB(Chromatic::REBECCAPURPLE);
@@ -140,14 +143,38 @@ void HSV_TestCase() {
     hsv.toRGB().dump();
     hsv.toCMYK().dump();
     hsv.toRGBA().dump();
-    std::cout << "==================== HSL TestCase Start ===================" << std::endl << std::endl;
+    std::cout << "==================== HSL TestCase End ===================" << std::endl << std::endl;
+}
+
+
+void RGB_Blend_TestCase() {
+    std::cout << "==================== RGB Blend TestCase Start ===================" << std::endl;
+    bool bBlendRedLime = RGB(RED).blend(LIME) == YELLOW;
+    cout << "Red blend Lime = Yellow ? ";
+    bBlendRedLime ? cout << "True" : cout << "False";
+    cout << std::endl;
+    
+    bBlendRedLime = RGB(RED).blend(LIME) + RGB(YELLOW).opposite() == WHITE;
+    cout << "Red blend Green = Yellow ? ";
+    bBlendRedLime ? cout << "True" : cout << "False";
+    cout << std::endl;
+    std::cout << "==================== RGB Blend TestCase End   ===================" << std::endl << std::endl;
+}
+
+void RGBA_Blend_TestCase() {
+    RGBA c1 = RGBA(235, 152, 80, 0.6f*255).dump();
+    RGBA c2 = RGBA(234, 97, 124, 0.8f*255).dump();
+//    RGBA c3 = c1.blend(c2).dump();
+    c2.blend(c1).dump();
 }
 
 int main() {
-    RGB_TestCase();
-    RGBA_TestCase();
-    CMYK_TestCase();
-    HSL_TestCase();
-    HSV_TestCase();
+//    RGB_TestCase();
+//    RGBA_TestCase();
+//    CMYK_TestCase();
+//    HSL_TestCase();
+//    HSV_TestCase();
+//    RGB_Blend_TestCase();
+    RGBA_Blend_TestCase();
 }
 

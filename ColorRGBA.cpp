@@ -10,6 +10,7 @@
 #include "StringUtils.hpp"
 #include <iostream>
 #include <vector>
+using namespace Chromatic;
 
 RGBA::RGBA()
 : r(0), g(0), b(0), a(0)
@@ -18,6 +19,15 @@ RGBA::RGBA()
 RGBA::RGBA(t_rgba _r, t_rgba _g, t_rgba _b, t_rgba _a)
 : r(_r), g(_g), b(_b), a(_a)
 {}
+
+RGBA RGBA::fromAlphaF(t_rgba _r, t_rgba _g, t_rgba _b, float _a)
+{
+    r = _r;
+    g = _g;
+    b = _b;
+    a = check(_a * RGBA::MAX);
+    return *this;
+}
 
 RGBA::RGBA(const RGBA& rgba)
 : r(rgba.r)
@@ -48,7 +58,7 @@ RGBA::RGBA(const HSV&  hsv)
     fromHSV(hsv);
 }
 
-RGBA::RGBA(std::string hex)
+RGBA::RGBA(string hex)
 {
     fromHEX(hex, false);
 }
@@ -61,6 +71,14 @@ bool RGBA::operator==(const RGBA& other) const
 bool RGBA::operator!=(const RGBA& other) const
 {
     return !(*this == other);
+}
+
+RGBA RGBA::operator|(const RGBA& other) {
+    return blend(other);
+}
+
+RGBA RGBA::operator|(const string hex) {
+    return blend(RGBA(hex));
 }
 
 RGBA RGBA::operator+(const RGBA& other)
@@ -167,7 +185,28 @@ RGBA RGBA::dump()
     char txt[32];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "RGBA(%03d,%03d,%03d,%03d) HEX(%s)", r, g, b, a, toHEX().c_str());
-    std::cout << txt << std::endl;
+    cout << txt << endl;
+    return *this;
+}
+
+RGBA RGBA::opposite() {
+    return *this = RGBA(WHITE) - *this;
+}
+
+RGBA RGBA::blend(const string hex) {
+    return blend(RGBA(hex));
+}
+
+RGBA RGBA::blend(const RGBA& rgba) {
+    float a1 = a * 1.f / RGBA::MAX;
+    float a2 = rgba.a * 1.f / RGBA::MAX;
+    float ar = a1 + a2 - a1 * a2;
+    
+    r = (r * a1 + rgba.r * a2 - r * a1 * a2) / ar + .5f;
+    g = (g * a1 + rgba.g * a2 - g * a1 * a2) / ar + .5f;
+    b = (b * a1 + rgba.b * a2 - b * a1 * a2) / ar + .5f;
+    a = ar * 255;
+    
     return *this;
 }
 
@@ -194,13 +233,13 @@ RGBA RGBA::fromHSV(const HSV &hsv)
     return *this = RGB(hsv).toRGBA();
 }
 
-RGBA RGBA::fromHEX(std::string hex, bool bCheckHex) {
+RGBA RGBA::fromHEX(string hex, bool bCheckHex) {
     clear();
     if(bCheckHex && !StringUtils::checkhex(hex)) return *this;
     
     unsigned long unHexSize = hex.size();
     unsigned long unSize = (unHexSize / 2) + (unHexSize % 2 == 0 ? 0 : 1);
-    std::vector<t_rgba*> vecRGBA;
+    vector<t_rgba*> vecRGBA;
     vecRGBA.clear();
     vecRGBA.push_back(&r);
     vecRGBA.push_back(&g);
@@ -233,7 +272,7 @@ HSV RGBA::toHSV()
     return RGB(*this).toHSV();
 }
 
-std::string RGBA::toHEX()
+string RGBA::toHEX()
 {
     std::string s_rgba("");
     s_rgba.append(StringUtils::hex02(red  ()));

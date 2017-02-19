@@ -9,9 +9,10 @@
 #ifndef ColorHSV_hpp
 #define ColorHSV_hpp
 
-#include <math.h>
 #include <iostream>
 #include "BaseMath.hpp"
+#include "BaseTypes.hpp"
+using namespace std;
 
 struct RGB;
 struct RGBA;
@@ -32,7 +33,7 @@ struct HSV {
     HSV(const RGBA& rgba);
     HSV(const CMYK& cmyk);
     HSV(const HSL& hsl);
-    HSV(const std::string hex);
+    HSV(const string hex);
     
     
     /* operator */
@@ -169,12 +170,12 @@ struct HSV {
     HSV fromRGBA(const RGBA& rgba);
     HSV fromCMYK(const CMYK& cmyk);
     HSV fromHSL(const HSL& hsl);
-    HSV fromHEX(std::string hex);
+    HSV fromHEX(string hex);
     RGB  toRGB();
     RGBA toRGBA();
     CMYK toCMYK();
     HSL  toHSL();
-    std::string toHEX();
+    string toHEX();
     
     
     /* constants */
