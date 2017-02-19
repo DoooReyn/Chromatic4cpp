@@ -13,11 +13,10 @@ using namespace Chromatic;
 using namespace std;
 
 void RGB_TestCase() {
-    RGB case0 = RGB(Chromatic::REBECCAPURPLE);
-    
     cout << "<# RGB TestCase Start" << endl;
     
     cout << "=> RGB original data:" << endl;
+    RGB case0 = RGB(Chromatic::REBECCAPURPLE);
     case0.dump();
     
     cout << endl << "=> single operator:" << endl;
@@ -71,6 +70,7 @@ void RGB_TestCase() {
 
 void RGBA_TestCase() {
     cout << "<# RGBA TestCase Start" << endl;
+    
     RGBA case0 = RGBA(Chromatic::INDIGO);
     
     cout << "=> RGBA original data:" << endl;
@@ -116,24 +116,29 @@ void RGBA_TestCase() {
     rgba.toRGB().dump();
     rgba.toCMYK().dump();
     rgba.toHSL().dump();
+    
     cout << "!!! RGBA TestCase End #>" << endl << endl;
 }
 
 void CMYK_TestCase() {
     cout << "<# CMYK TestCase Start " << endl;
+    
     CMYK cmyk = CMYK().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     cmyk.toRGB().dump();
     cmyk.toHSL().dump();
     cmyk.toRGBA().dump();
+    
     cout << "!!! CMYK TestCase END #>" << endl << endl;
 }
 
 void HSL_TestCase() {
     cout << "<# HSL TestCase Start " << endl;
+    
     HSL hsl = HSL().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     hsl.toRGB().dump();
     hsl.toCMYK().dump();
     hsl.toRGBA().dump();
+    
     cout << "!!! HSL TestCase Start #>" << endl << endl;
 }
 
@@ -149,6 +154,7 @@ void HSV_TestCase() {
 
 void RGB_Blend_TestCase() {
     cout << "<# RGB Blend TestCase Start" << endl;
+    
     bool bBlendRedLime = RGB(RED).blend(LIME) == YELLOW;
     cout << "Red blend Lime = Yellow ? ";
     bBlendRedLime ? cout << "True" : cout << "False";
@@ -158,24 +164,34 @@ void RGB_Blend_TestCase() {
     cout << "Red blend Green = Yellow ? ";
     bBlendRedLime ? cout << "True" : cout << "False";
     cout << endl;
+    
     cout << "!!! RGB Blend TestCase End #>" << endl << endl;
 }
 
 void RGBA_Blend_TestCase() {
     cout << "<# RGBA Blend TestCase Start" << endl;
+    
     RGBA c1 = RGBA().fromAlphaF(235, 152, 80, 0.6f).dump();
     RGBA c2 = RGBA().fromAlphaF(234, 97, 124, 0.8f).dump();
     c1.blend(c2).dump();
+    
     cout << "RGBA Blend TestCase End #>" << endl << endl;
 }
 
 void ColorRandom_TestCase() {
     cout << "<# Color Random TestCase Start" << endl;
-    RGB().random().dump();
-    RGBA().random().dump();
-    CMYK().random().dump();
-    HSL().random().dump();
-    HSV().random().dump();
+    
+    RGB  c1 = RGB().random().dump();
+    randomColor(c1).dump();
+    RGBA c2 = RGBA().random().dump();
+    randomColor(c2).dump();
+    CMYK c3 = CMYK().random().dump();
+    randomColor(c3).dump();
+    HSL  c4 = HSL().random().dump();
+    randomColor(c4).dump();
+    HSV  c5 = HSV().random().dump();
+    randomColor(c5).dump();
+    
     cout << "!!! Color Random TestCase End #>" << endl << endl;
 }
 
