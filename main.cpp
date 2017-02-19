@@ -16,7 +16,7 @@ void RGB_TestCase() {
     cout << "<# RGB TestCase Start" << endl;
     
     cout << "=> RGB original data:" << endl;
-    RGB case0 = RGB(Chromatic::REBECCAPURPLE);
+    RGB case0 = RGB(REBECCAPURPLE);
     case0.dump();
     
     cout << endl << "=> single operator:" << endl;
@@ -55,11 +55,11 @@ void RGB_TestCase() {
     case0.clear(255).dump();
     
     cout << endl << "=> RED + LIME = YELLOW : " << endl;
-    (RGB(Chromatic::RED) + RGB(Chromatic::LIME)).dump();
-    RGB(Chromatic::YELLOW).dump();
+    (RGB(RED) + RGB(LIME)).dump();
+    RGB(YELLOW).dump();
     
     cout << endl << "=> convertor: " << endl;
-    RGB rgb = RGB().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    RGB rgb = RGB().fromHEX(ANTIQUEWHITE).dump();
     rgb.toRGBA().dump();
     rgb.toCMYK().dump();
     rgb.toHSL().dump();
@@ -71,7 +71,7 @@ void RGB_TestCase() {
 void RGBA_TestCase() {
     cout << "<# RGBA TestCase Start" << endl;
     
-    RGBA case0 = RGBA(Chromatic::INDIGO);
+    RGBA case0 = RGBA(INDIGO);
     
     cout << "=> RGBA original data:" << endl;
     case0.dump();
@@ -112,7 +112,7 @@ void RGBA_TestCase() {
     case0.clear(255).dump();
     
     cout << endl << "=> convertor: " << endl;
-    RGBA rgba = RGBA().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    RGBA rgba = RGBA().fromHEX(ANTIQUEWHITE).dump();
     rgba.toRGB().dump();
     rgba.toCMYK().dump();
     rgba.toHSL().dump();
@@ -123,7 +123,7 @@ void RGBA_TestCase() {
 void CMYK_TestCase() {
     cout << "<# CMYK TestCase Start " << endl;
     
-    CMYK cmyk = CMYK().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    CMYK cmyk = CMYK().fromHEX(ANTIQUEWHITE).dump();
     cmyk.toRGB().dump();
     cmyk.toHSL().dump();
     cmyk.toRGBA().dump();
@@ -134,7 +134,7 @@ void CMYK_TestCase() {
 void HSL_TestCase() {
     cout << "<# HSL TestCase Start " << endl;
     
-    HSL hsl = HSL().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    HSL hsl = HSL().fromHEX(ANTIQUEWHITE).dump();
     hsl.toRGB().dump();
     hsl.toCMYK().dump();
     hsl.toRGBA().dump();
@@ -144,7 +144,7 @@ void HSL_TestCase() {
 
 void HSV_TestCase() {
     cout << "<# HSV TestCase Start" << endl;
-    HSV hsv = HSV().fromHEX(Chromatic::ANTIQUEWHITE).dump();
+    HSV hsv = HSV().fromHEX(ANTIQUEWHITE).dump();
     hsv.toRGB().dump();
     hsv.toCMYK().dump();
     hsv.toRGBA().dump();
@@ -243,6 +243,5 @@ int main() {
     RGBA_Blend_TestCase();
     ColorRandom_TestCase();
     CompareColor_TestCase();
-
 }
 
