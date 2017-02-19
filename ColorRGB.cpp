@@ -188,6 +188,14 @@ RGB RGB::dump()
     return *this;
 }
 
+RGB RGB::random() {
+    setrandomseed();
+    r = randomAB(RGB::MIN, RGB::MAX);
+    g = randomAB(RGB::MIN, RGB::MAX);
+    b = randomAB(RGB::MIN, RGB::MAX);
+    return *this = RGB(r,g,b);
+}
+
 RGB RGB::blend(const string hex)
 {
     return *this | RGB(hex);

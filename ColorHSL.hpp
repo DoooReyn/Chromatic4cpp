@@ -137,6 +137,7 @@ struct HSL {
     }
     
     HSL dump();
+    HSL random();
     
     
     // getter/setter

@@ -189,6 +189,15 @@ RGBA RGBA::dump()
     return *this;
 }
 
+RGBA RGBA::random() {
+    setrandomseed();
+    r = randomAB(RGB::MIN, RGB::MAX);
+    g = randomAB(RGB::MIN, RGB::MAX);
+    b = randomAB(RGB::MIN, RGB::MAX);
+    a = randomAB(RGB::MIN, RGB::MAX);
+    return *this = RGBA(r,g,b,a);
+}
+
 RGBA RGBA::opposite() {
     return *this = RGBA(WHITE) - *this;
 }

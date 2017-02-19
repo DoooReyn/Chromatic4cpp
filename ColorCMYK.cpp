@@ -147,6 +147,15 @@ CMYK CMYK::dump() {
     return *this;
 }
 
+CMYK CMYK::random() {
+    setrandomseed();
+    c = random01();
+    m = random01();
+    y = random01();
+    k = random01();
+    return *this;
+}
+
 CMYK CMYK::fromRGB(const RGB& rgb) {
     t_cmyk c0 = 255 - rgb.r;
     t_cmyk m0 = 255 - rgb.g;

@@ -139,6 +139,7 @@ struct HSV {
     }
     
     HSV dump();
+    HSV random();
     
     
     // getter/setter

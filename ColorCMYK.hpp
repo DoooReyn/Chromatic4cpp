@@ -23,7 +23,6 @@ struct CMYK {
     t_cmyk y;// yellow
     t_cmyk k;// black
     
-    
     /* constructor */
     CMYK();
     CMYK(t_cmyk _c, t_cmyk _m, t_cmyk _y, t_cmyk _k);
@@ -92,14 +91,13 @@ struct CMYK {
         c = m = y = k = cv;
         return *this;
     }
-    
     t_cmyk check(t_cmyk cv) {
         if(cv < CMYK::MIN) return CMYK::MIN;
         if(cv > CMYK::MAX) return CMYK::MAX;
         return (t_cmyk)cv;
     }
-    
     CMYK dump();
+    CMYK random();
 
     
     // getter/setter

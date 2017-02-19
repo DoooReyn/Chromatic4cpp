@@ -11,6 +11,7 @@
 
 #include "BaseMath.hpp"
 #include "BaseTypes.hpp"
+#include "StringUtils.hpp"
 using namespace std;
 
 struct RGBA;
@@ -107,15 +108,13 @@ public:
         r = g = b = v;
         return *this;
     }
-    
-    RGB dump();
-    
     t_rgb check(int n_rgb) {
         if( n_rgb < 0) n_rgb = 0;
         if( n_rgb > 255) n_rgb = 255;
         return (t_rgb)n_rgb;
     }
-    
+    RGB dump();
+    RGB random();    
     RGB blend(const string hex);
     RGB blend(const string* hexArr, int size=0);
     

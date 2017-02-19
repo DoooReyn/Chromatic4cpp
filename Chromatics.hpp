@@ -19,12 +19,28 @@
 #include "ColorHSV.hpp"
 using namespace std;
 
-template<class T> int getArrayLen(T& array)
-{//使用模板定义一 个函数getArrayLen,该函数将返回数组array的长度
-    return (sizeof(array) / sizeof(array[0]));
-}
-
 namespace Chromatic {
+    typedef enum {
+        eColorRGB,
+        eColorRGBA,
+    } ColorType;
+    
+    template<class T> int getArrayLen(T& array)
+    {//使用模板定义一 个函数getArrayLen,该函数将返回数组array的长度
+        return (sizeof(array) / sizeof(array[0]));
+    }
+    
+    template<class T> T randomColor(T& c)
+    {//使用模板定义一 个函数getArrayLen,该函数将返回数组array的长度
+        return c.random();
+    }
+    
+//    RGB randomRGB();
+//    RGBA randomRGBA();
+//    CMYK randomCMYK();
+//    HSL randomHSL();
+//    HSV randomHSV();
+    
     const string INDIGO                = "4B0082";
     const string GOLD                  = "FFD700";
     const string HOTPINK               = "FF69B4";

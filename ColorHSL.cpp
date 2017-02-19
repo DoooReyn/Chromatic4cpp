@@ -130,6 +130,14 @@ HSL HSL::dump() {
     return *this;
 }
 
+HSL HSL::random() {
+    setrandomseed();
+    h = randomAB(HSL::MIN_HUE, HSL::MAX_HUE);
+    s = random01();
+    l = random01();
+    return *this;
+}
+
 HSL HSL::fromRGB(const RGB& rgb) {
     float r = rgb.r * 1.f / RGB::MAX;
     float g = rgb.g * 1.f / RGB::MAX;

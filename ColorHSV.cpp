@@ -130,6 +130,14 @@ HSV HSV::dump() {
     return *this;
 }
 
+HSV HSV::random() {
+    setrandomseed();
+    h = randomAB(HSV::MIN_HUE, HSV::MAX_HUE);
+    s = random01();
+    v = random01();
+    return *this;
+}
+
 HSV HSV::fromRGB(const RGB& rgb) {
     float r = rgb.r * 1.f / RGB::MAX;
     float g = rgb.g * 1.f / RGB::MAX;

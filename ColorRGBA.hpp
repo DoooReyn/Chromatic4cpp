@@ -103,6 +103,7 @@ public:
     }
     
     RGBA dump();
+    RGBA random();
     RGBA opposite();
     RGBA blend(const string hex);
     RGBA blend(const RGBA& other);
