@@ -1,12 +1,15 @@
 # chromatic4cpp
 
 ## 一、介绍
-chromatic4cpp 致力于为 c++ 的色值操作和相互转换提供便利，当前已经支持 RGB，RGBA，CMYK，HSL，HSV 五种色值类型。
+`chromatic4cpp` 致力于为 `C++` 的色值操作和相互转换提供便利，当前已经支持 `RGB，RGBA，CMYK，HSL，HSV` 五种色值类型。
 
 **chromatic4cpp 主要特点有：**
-- 支持色值之间的运算（加、减、乘、除、取余、等于、不等于）；
-- 支持十六进制色值与RGB、RGBA之间的转换；
-- 提供了丰富的RGB、RGBA预定义色值；
+- 支持色值之间的运算（加、减、乘、除、取余、等于、不等于 及其他）；
+- 支持十六进制色值与 `RGB，RGBA，CMYK，HSL，HSV` 之间的转换；
+- 提供了丰富的十六进制预定义色值*（无 `Alpha` 通道）*；
+- 不同模式下的随机色值；
+- 不同模式之间的色值比对；
+- ...
 
 **chromatic4cpp 的主要接口如下：**
 - `equals` : 同等于
@@ -39,28 +42,44 @@ chromatic4cpp 致力于为 c++ 的色值操作和相互转换提供便利，当�
 - `toCMYK` : 转换为 CMYK 模式
 - `toHSL(V)` :转换为 HSL(V) 模式
 - `toHEX` : 转换为十六进制模式
+- `blend` : 混合色值计算（色值叠加计算，目前只支持 RGB 和 RGBA）
+- `opposite` : 获取 RGB(A) 色值的相反色
+- `Chromatic::equals` : 宽松比对两种色彩模式的色值是否相等
+- `Chromatic::sequals` : 严格比对两种色彩模式的色值是否相等
+- `random` : 获取随机色值
 
 
 ## 二、测试用例
+
 ``` cpp
+//
+//  main.cpp
+//  Playground
+//
+//  Created by Reyn-Mac on 2017/1/25.
+//  Copyright © 2017年 Reyn-Mac. All rights reserved.
+//
+#include <stdio.h>
 #include <iostream>
 #include "Chromatics/Chromatics.hpp"
+#include "StringUtils.hpp"
+using namespace Chromatic;
+using namespace std;
 
 void RGB_TestCase() {
+    cout << "<# RGB TestCase Start" << endl;
+    
+    cout << "=> RGB original data:" << endl;
     RGB case0 = RGB(Chromatic::REBECCAPURPLE);
-    
-    std::cout << "==================== RGB TestCase Start ===================" << std::endl;
-    
-    std::cout << "=> RGB original data:" << std::endl;
     case0.dump();
     
-    std::cout << std::endl << "=> single operator:" << std::endl;
+    cout << endl << "=> single operator:" << endl;
     (case0+1).dump();
     (case0-1).dump();
     (case0*2).dump();
     (case0/2).dump();
     (case0%15.f).dump();
-    std::cout << std::endl << "=> mixed  operator:" << std::endl;
+    cout << endl << "=> mixed  operator:" << endl;
     case0.clear(166);
     (case0+RGB(1,1,1)).dump();
     (case0-RGB(1,1,1)).dump();
@@ -68,55 +87,56 @@ void RGB_TestCase() {
     (case0/RGB(2,2,2)).dump();
     (case0%RGB(15,15,15)).dump();
     
-    std::cout << std::endl << "=> use scale:" << std::endl;
+    cout << endl << "=> use scale:" << endl;
     (case0.scale(10.8).dump());
     
-    std::cout << std::endl << "=> use divide:" << std::endl;
+    cout << endl << "=> use divide:" << endl;
     (case0.divide(2).dump());
 
-    std::cout << std::endl << "=> from hex string(do check):" << std::endl;
+    cout << endl << "=> from hex string(do check):" << endl;
     case0.fromHEX("80aF*U", true).dump();
     
-    std::cout << std::endl << "=> from hex string(do not check):" << std::endl;
+    cout << endl << "=> from hex string(do not check):" << endl;
     case0.fromHEX("80aF*U", false).dump();
     
-    std::cout << std::endl << "=> to hex string:" << std::endl;
-    std::cout << case0.toHEX() << std::endl;
+    cout << endl << "=> to hex string:" << endl;
+    cout << case0.toHEX() << endl;
     
-    std::cout << std::endl << "=> from/to RGBA:" << std::endl;
+    cout << endl << "=> from/to RGBA:" << endl;
     case0.fromRGBA(case0.toRGBA().dump()).dump();
     
-    std::cout << std::endl << "=> clear with:" << std::endl;
+    cout << endl << "=> clear with:" << endl;
     case0.clear(255).dump();
     
-    std::cout << std::endl << "=> RED + LIME = YELLOW : " << std::endl;
+    cout << endl << "=> RED + LIME = YELLOW : " << endl;
     (RGB(Chromatic::RED) + RGB(Chromatic::LIME)).dump();
     RGB(Chromatic::YELLOW).dump();
     
-    std::cout << std::endl << "=> convertor: " << std::endl;
+    cout << endl << "=> convertor: " << endl;
     RGB rgb = RGB().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     rgb.toRGBA().dump();
     rgb.toCMYK().dump();
     rgb.toHSL().dump();
     
-    std::cout << "==================== RGB TestCase End =====================" << std::endl << std::endl;
+    cout << "!!! RGB TestCase End #>" << endl << endl;
 }
 
 
 void RGBA_TestCase() {
-    std::cout << "=================== RGBA TestCase Start ===================" << std::endl;
+    cout << "<# RGBA TestCase Start" << endl;
+    
     RGBA case0 = RGBA(Chromatic::INDIGO);
     
-    std::cout << "=> RGBA original data:" << std::endl;
+    cout << "=> RGBA original data:" << endl;
     case0.dump();
     
-    std::cout << std::endl << "=> single operator:" << std::endl;
+    cout << endl << "=> single operator:" << endl;
     (case0+1).dump();
     (case0-1).dump();
     (case0*2).dump();
     (case0/2).dump();
     (case0%15.f).dump();
-    std::cout << std::endl << "=> mixed  operator:" << std::endl;
+    cout << endl << "=> mixed  operator:" << endl;
     case0.clear(166);
     (case0+RGBA(1,1,1,1)).dump();
     (case0-RGBA(1,1,1,1)).dump();
@@ -124,60 +144,147 @@ void RGBA_TestCase() {
     (case0/RGBA(2,2,2,2)).dump();
     (case0%RGBA(15,15,15,15)).dump();
     
-    std::cout << std::endl << "=> use scale:" << std::endl;
+    cout << endl << "=> use scale:" << endl;
     (case0.scale(10.8).dump());
     
-    std::cout << std::endl << "=> use divide:" << std::endl;
+    cout << endl << "=> use divide:" << endl;
     (case0.divide(2).dump());
     
-    std::cout << std::endl << "=> from hex string (do check):" << std::endl;
+    cout << endl << "=> from hex string (do check):" << endl;
     case0.fromHEX("80aF*UE", true).dump();
     
-    std::cout << std::endl << "=> from hex string (do not check):" << std::endl;
+    cout << endl << "=> from hex string (do not check):" << endl;
     case0.fromHEX("80aF*UE", false).dump();
     
-    std::cout << std::endl << "=> to hex string:" << std::endl;
-    std::cout << case0.toHEX() << std::endl;
+    cout << endl << "=> to hex string:" << endl;
+    cout << case0.toHEX() << endl;
     
-    std::cout << std::endl << "=> from/to RGB:" << std::endl;
+    cout << endl << "=> from/to RGB:" << endl;
     case0.fromRGB(case0.toRGB().dump()).dump();
     
-    std::cout << std::endl << "=> clear with:" << std::endl;
+    cout << endl << "=> clear with:" << endl;
     case0.clear(255).dump();
     
-    std::cout << std::endl << "=> convertor: " << std::endl;
+    cout << endl << "=> convertor: " << endl;
     RGBA rgba = RGBA().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     rgba.toRGB().dump();
     rgba.toCMYK().dump();
     rgba.toHSL().dump();
-    std::cout << "=================== RGBA TestCase End =====================" << std::endl << std::endl;
+    
+    cout << "!!! RGBA TestCase End #>" << endl << endl;
 }
 
 void CMYK_TestCase() {
-    std::cout << "=================== CMYK TestCase Start ===================" << std::endl;
+    cout << "<# CMYK TestCase Start " << endl;
+    
     CMYK cmyk = CMYK().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     cmyk.toRGB().dump();
     cmyk.toHSL().dump();
     cmyk.toRGBA().dump();
-    std::cout << "=================== CMYK TestCase END =====================" << std::endl << std::endl;
+    
+    cout << "!!! CMYK TestCase END #>" << endl << endl;
 }
 
 void HSL_TestCase() {
-    std::cout << "==================== HSL TestCase Start ===================" << std::endl;
+    cout << "<# HSL TestCase Start " << endl;
+    
     HSL hsl = HSL().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     hsl.toRGB().dump();
     hsl.toCMYK().dump();
     hsl.toRGBA().dump();
-    std::cout << "==================== HSL TestCase Start ===================" << std::endl << std::endl;
+    
+    cout << "!!! HSL TestCase Start #>" << endl << endl;
 }
 
 void HSV_TestCase() {
-    std::cout << "==================== HSL TestCase Start ===================" << std::endl;
+    cout << "<# HSV TestCase Start" << endl;
     HSV hsv = HSV().fromHEX(Chromatic::ANTIQUEWHITE).dump();
     hsv.toRGB().dump();
     hsv.toCMYK().dump();
     hsv.toRGBA().dump();
-    std::cout << "==================== HSL TestCase Start ===================" << std::endl << std::endl;
+    cout << "!!! HSV TestCase End #>" << endl << endl;
+}
+
+
+void RGB_Blend_TestCase() {
+    cout << "<# RGB Blend TestCase Start" << endl;
+    
+    bool bBlendRedLime = RGB(RED).blend(LIME) == YELLOW;
+    cout << "Red blend Lime = Yellow ? ";
+    bBlendRedLime ? cout << "True" : cout << "False";
+    cout << endl;
+    
+    bBlendRedLime = RGB(RED).blend(LIME) + RGB(YELLOW).opposite() == WHITE;
+    cout << "Red blend Green = Yellow ? ";
+    bBlendRedLime ? cout << "True" : cout << "False";
+    cout << endl;
+    
+    cout << "!!! RGB Blend TestCase End #>" << endl << endl;
+}
+
+void RGBA_Blend_TestCase() {
+    cout << "<# RGBA Blend TestCase Start" << endl;
+    
+    RGBA c1 = RGBA().fromAlphaF(235, 152, 80, 0.6f).dump();
+    RGBA c2 = RGBA().fromAlphaF(234, 97, 124, 0.8f).dump();
+    c1.blend(c2).dump();
+    
+    cout << "RGBA Blend TestCase End #>" << endl << endl;
+}
+
+void ColorRandom_TestCase() {
+    cout << "<# Color Random TestCase Start" << endl;
+    
+    RGB  c1 = RGB().random().dump();
+    randomColor(c1).dump();
+    RGBA c2 = RGBA().random().dump();
+    randomColor(c2).dump();
+    CMYK c3 = CMYK().random().dump();
+    randomColor(c3).dump();
+    HSL  c4 = HSL().random().dump();
+    randomColor(c4).dump();
+    HSV  c5 = HSV().random().dump();
+    randomColor(c5).dump();
+    
+    cout << "!!! Color Random TestCase End #>" << endl << endl;
+}
+
+void CompareColor_TestCase() {
+    cout << "<# Compare Color With Mode Start" << endl;
+    
+    RGB  c1 = RGB(LIMEGREEN).dump();
+    RGBA c2 = RGBA(LIMEGREEN).alpha(88).dump();
+    CMYK c3 = CMYK(LIMEGREEN).dump();
+    HSL  c4 = HSL(LIMEGREEN).dump();
+    HSV  c5 = HSV(LIMEGREEN).dump();
+    cout << "[Color Value] LIMEGREEN: HEX(#32CD32)" << endl;
+    cout << "[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV " << endl;
+    cout << "[CampareMode] loose :" << endl;
+    cout << "c1 == c2 ? " << (equals(c1, c2) ? "True" : "False") << endl;
+    cout << "c1 == c3 ? " << (equals(c1, c3) ? "True" : "False") << endl;
+    cout << "c1 == c4 ? " << (equals(c1, c4) ? "True" : "False") << endl;
+    cout << "c1 == c5 ? " << (equals(c1, c5) ? "True" : "False") << endl;
+    cout << "c2 == c3 ? " << (equals(c2, c3) ? "True" : "False") << endl;
+    cout << "c2 == c4 ? " << (equals(c2, c4) ? "True" : "False") << endl;
+    cout << "c2 == c5 ? " << (equals(c2, c5) ? "True" : "False") << endl;
+    cout << "c3 == c4 ? " << (equals(c3, c4) ? "True" : "False") << endl;
+    cout << "c3 == c5 ? " << (equals(c3, c5) ? "True" : "False") << endl;
+    cout << "c4 == c5 ? " << (equals(c4, c5) ? "True" : "False") << endl;
+    cout << "[Color Value] LIMEGREEN: HEX(#32CD32)" << endl;
+    cout << "[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV " << endl;
+    cout << "[CampareMode] strict :" << endl;
+    cout << "c1 == c2 ? " << (sequals(c1, c2) ? "True" : "False") << endl;
+    cout << "c1 == c3 ? " << (sequals(c1, c3) ? "True" : "False") << endl;
+    cout << "c1 == c4 ? " << (sequals(c1, c4) ? "True" : "False") << endl;
+    cout << "c1 == c5 ? " << (sequals(c1, c5) ? "True" : "False") << endl;
+    cout << "c2 == c3 ? " << (sequals(c2, c3) ? "True" : "False") << endl;
+    cout << "c2 == c4 ? " << (sequals(c2, c4) ? "True" : "False") << endl;
+    cout << "c2 == c5 ? " << (sequals(c2, c5) ? "True" : "False") << endl;
+    cout << "c3 == c4 ? " << (sequals(c3, c4) ? "True" : "False") << endl;
+    cout << "c3 == c5 ? " << (sequals(c3, c5) ? "True" : "False") << endl;
+    cout << "c4 == c5 ? " << (sequals(c4, c5) ? "True" : "False") << endl;
+    
+    cout << "!!! Compare Color With Mode End #>" << endl << endl;
 }
 
 int main() {
@@ -186,135 +293,194 @@ int main() {
     CMYK_TestCase();
     HSL_TestCase();
     HSV_TestCase();
+    RGB_Blend_TestCase();
+    RGBA_Blend_TestCase();
+    ColorRandom_TestCase();
+    CompareColor_TestCase();
 }
-
-
 
 ```
 
 **输出：**
 
 ``` zsh
-==================== RGB TestCase Start ===================
+<# RGB TestCase Start
 => RGB original data:
-RGB(102,051,153) HEX(663399)
+RGB(102,051,153) HEX(#663399)
 
 => single operator:
-RGB(103,052,154) HEX(67349a)
-RGB(102,051,153) HEX(663399)
-RGB(204,102,255) HEX(cc66ff)
-RGB(102,051,127) HEX(66337f)
-RGB(012,006,007) HEX(0c0607)
+RGB(103,052,154) HEX(#67349A)
+RGB(102,051,153) HEX(#663399)
+RGB(204,102,255) HEX(#CC66FF)
+RGB(102,051,127) HEX(#66337F)
+RGB(012,006,007) HEX(#0C0607)
 
 => mixed  operator:
-RGB(167,167,167) HEX(a7a7a7)
-RGB(166,166,166) HEX(a6a6a6)
-RGB(255,255,255) HEX(ffffff)
-RGB(127,127,127) HEX(7f7f7f)
-RGB(007,007,007) HEX(070707)
+RGB(167,167,167) HEX(#A7A7A7)
+RGB(166,166,166) HEX(#A6A6A6)
+RGB(255,255,255) HEX(#FFFFFF)
+RGB(127,127,127) HEX(#7F7F7F)
+RGB(007,007,007) HEX(#070707)
 
 => use scale:
-RGB(075,075,075) HEX(4b4b4b)
+RGB(075,075,075) HEX(#4B4B4B)
 
 => use divide:
-RGB(037,037,037) HEX(252525)
+RGB(037,037,037) HEX(#252525)
 
 => from hex string(do check):
-RGB(000,000,000) HEX(000000)
+RGB(000,000,000) HEX(#000000)
 
 => from hex string(do not check):
-RGB(128,175,000) HEX(80af00)
+RGB(128,175,000) HEX(#80AF00)
 
 => to hex string:
-80af00
+#80AF00
 
 => from/to RGBA:
-RGBA(128,175,000,255) HEX(80af00ff)
-RGB(128,175,000) HEX(80af00)
+RGBA(128,175,000,000) HEX(#80AF0000)
+RGB(128,175,000) HEX(#80AF00)
 
 => clear with:
-RGB(255,255,255) HEX(ffffff)
+RGB(255,255,255) HEX(#FFFFFF)
 
 => RED + LIME = YELLOW : 
-RGB(255,255,000) HEX(ffff00)
-RGB(255,255,000) HEX(ffff00)
+RGB(255,255,000) HEX(#FFFF00)
+RGB(255,255,000) HEX(#FFFF00)
 
 => convertor: 
-RGB(250,235,215) HEX(faebd7)
-RGBA(250,235,215,255) HEX(faebd7ff)
-CMYK(0.000,0.060,0.140,0.020) HEX(faebd7)
-HSL(034,0.778,0.912) HEX(faebd7)
-==================== RGB TestCase End =====================
+RGB(250,235,215) HEX(#FAEBD7)
+RGBA(250,235,215,000) HEX(#FAEBD700)
+CMYK(0.000,0.060,0.140,0.020) HEX(#FAEBD7)
+HSL(034,0.778,0.912) HEX(#FAEBD7)
+!!! RGB TestCase End #>
 
-=================== RGBA TestCase Start ===================
+<# RGBA TestCase Start
 => RGBA original data:
-RGBA(075,000,130,255) HEX(4b0082ff)
+RGBA(075,000,130,000) HEX(#4B008200)
 
 => single operator:
-RGBA(076,001,131,255) HEX(4c0183ff)
-RGBA(075,000,130,254) HEX(4b0082fe)
-RGBA(150,000,255,255) HEX(9600ffff)
-RGBA(075,000,127,127) HEX(4b007f7f)
-RGBA(000,000,007,007) HEX(00000707)
+RGBA(076,001,131,001) HEX(#4C018301)
+RGBA(075,000,130,000) HEX(#4B008200)
+RGBA(150,000,255,000) HEX(#9600FF00)
+RGBA(075,000,127,000) HEX(#4B007F00)
+RGBA(000,000,007,000) HEX(#00000700)
 
 => mixed  operator:
-RGBA(167,167,167,167) HEX(a7a7a7a7)
-RGBA(166,166,166,166) HEX(a6a6a6a6)
-RGBA(255,255,255,255) HEX(ffffffff)
-RGBA(127,127,127,127) HEX(7f7f7f7f)
-RGBA(007,007,007,007) HEX(07070707)
+RGBA(167,167,167,167) HEX(#A7A7A7A7)
+RGBA(166,166,166,166) HEX(#A6A6A6A6)
+RGBA(255,255,255,255) HEX(#FFFFFFFF)
+RGBA(127,127,127,127) HEX(#7F7F7F7F)
+RGBA(007,007,007,007) HEX(#07070707)
 
 => use scale:
-RGBA(075,075,075,075) HEX(4b4b4b4b)
+RGBA(075,075,075,075) HEX(#4B4B4B4B)
 
 => use divide:
-RGBA(037,037,037,037) HEX(25252525)
+RGBA(037,037,037,037) HEX(#25252525)
 
 => from hex string (do check):
-RGBA(000,000,000,000) HEX(00000000)
+RGBA(000,000,000,000) HEX(#00000000)
 
 => from hex string (do not check):
-RGBA(128,175,000,224) HEX(80af00e0)
+RGBA(128,175,000,224) HEX(#80AF00E0)
 
 => to hex string:
-80af00e0
+#80AF00E0
 
 => from/to RGB:
-RGB(128,175,000) HEX(80af00)
-RGBA(128,175,000,255) HEX(80af00ff)
+RGB(128,175,000) HEX(#80AF00)
+RGBA(128,175,000,000) HEX(#80AF0000)
 
 => clear with:
-RGBA(255,255,255,255) HEX(ffffffff)
+RGBA(255,255,255,255) HEX(#FFFFFFFF)
 
 => convertor: 
-RGBA(250,235,215,255) HEX(faebd7ff)
-RGB(250,235,215) HEX(faebd7)
-CMYK(0.000,0.060,0.140,0.020) HEX(faebd7)
-HSL(034,0.778,0.912) HEX(faebd7)
-=================== RGBA TestCase End =====================
+RGBA(250,235,215,000) HEX(#FAEBD700)
+RGB(250,235,215) HEX(#FAEBD7)
+CMYK(0.000,0.060,0.140,0.020) HEX(#FAEBD7)
+HSL(034,0.778,0.912) HEX(#FAEBD7)
+!!! RGBA TestCase End #>
 
-=================== CMYK TestCase Start ===================
-CMYK(0.000,0.060,0.140,0.020) HEX(faebd7)
-RGB(250,235,215) HEX(faebd7)
-HSL(034,0.778,0.912) HEX(faebd7)
-RGBA(250,235,215,255) HEX(faebd7ff)
-=================== CMYK TestCase END =====================
+<# CMYK TestCase Start 
+CMYK(0.000,0.060,0.140,0.020) HEX(#FAEBD7)
+RGB(250,235,215) HEX(#FAEBD7)
+HSL(034,0.778,0.912) HEX(#FAEBD7)
+RGBA(250,235,215,000) HEX(#FAEBD700)
+!!! CMYK TestCase END #>
 
-==================== HSL TestCase Start ===================
-HSL(034,0.778,0.912) HEX(faebd7)
-RGB(250,235,215) HEX(faebd7)
-CMYK(0.000,0.060,0.140,0.020) HEX(faebd7)
-RGBA(250,235,215,255) HEX(faebd7ff)
-==================== HSL TestCase Start ===================
+<# HSL TestCase Start 
+HSL(034,0.778,0.912) HEX(#FAEBD7)
+RGB(250,235,215) HEX(#FAEBD7)
+CMYK(0.000,0.060,0.140,0.020) HEX(#FAEBD7)
+RGBA(250,235,215,000) HEX(#FAEBD700)
+!!! HSL TestCase Start #>
 
-==================== HSL TestCase Start ===================
-HSV(034,0.140,0.980) HEX(faebd7)
-RGB(250,235,215) HEX(faebd7)
-CMYK(0.000,0.060,0.140,0.020) HEX(faebd7)
-RGBA(250,235,215,255) HEX(faebd7ff)
-==================== HSL TestCase Start ===================
+<# HSV TestCase Start
+HSV(034,0.140,0.980) HEX(#FAEBD7)
+RGB(250,235,215) HEX(#FAEBD7)
+CMYK(0.000,0.060,0.140,0.020) HEX(#FAEBD7)
+RGBA(250,235,215,000) HEX(#FAEBD700)
+!!! HSV TestCase End #>
 
-Program ended with exit code: 0
+<# RGB Blend TestCase Start
+Red blend Lime = Yellow ? True
+Red blend Green = Yellow ? True
+!!! RGB Blend TestCase End #>
+
+<# RGBA Blend TestCase Start
+RGBA(235,152,080,153) HEX(#EB985099)
+RGBA(234,097,124,204) HEX(#EA617CCC)
+RGBA(234,104,118,234) HEX(#EA6876EA)
+RGBA Blend TestCase End #>
+
+<# Color Random TestCase Start
+RGB(135,012,182) HEX(#870CB6)
+RGB(211,129,080) HEX(#D38150)
+RGBA(203,078,031,087) HEX(#CB4E1F57)
+RGBA(120,105,210,236) HEX(#7869D2EC)
+CMYK(0.631,0.390,0.383,0.965) HEX(#030505)
+CMYK(0.569,0.416,0.865,0.759) HEX(#1A2308)
+HSL(345,0.917,0.390) HEX(#BF0836)
+HSL(175,0.758,0.220) HEX(#0E635C)
+HSV(219,0.490,0.770) HEX(#6486C4)
+HSV(174,0.375,0.618) HEX(#629E98)
+!!! Color Random TestCase End #>
+
+<# Compare Color With Mode Start
+RGB(050,205,050) HEX(#32CD32)
+RGBA(050,205,050,088) HEX(#32CD3258)
+CMYK(0.756,0.000,0.756,0.196) HEX(#32CD32)
+HSL(120,0.608,0.500) HEX(#32CD32)
+HSV(120,0.756,0.804) HEX(#32CD32)
+[Color Value] LIMEGREEN: HEX(#32CD32)
+[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV 
+[CampareMode] loose :
+c1 == c2 ? True
+c1 == c3 ? True
+c1 == c4 ? True
+c1 == c5 ? True
+c2 == c3 ? True
+c2 == c4 ? True
+c2 == c5 ? True
+c3 == c4 ? True
+c3 == c5 ? True
+c4 == c5 ? True
+[Color Value] LIMEGREEN: HEX(#32CD32)
+[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV 
+[CampareMode] strict :
+c1 == c2 ? False
+c1 == c3 ? True
+c1 == c4 ? True
+c1 == c5 ? True
+c2 == c3 ? False
+c2 == c4 ? False
+c2 == c5 ? False
+c3 == c4 ? True
+c3 == c5 ? True
+c4 == c5 ? True
+!!! Compare Color With Mode End #>
+
 ```
 
 ## 三、预定义的色值
