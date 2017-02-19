@@ -40,7 +40,7 @@ RGBA::RGBA(const RGB& other)
 : r(other.r)
 , g(other.g)
 , b(other.b)
-, a(RGBA::MAX)
+, a(RGBA::MIN)
 {}
 
 RGBA::RGBA(const CMYK& cmyk)
@@ -182,7 +182,7 @@ RGBA RGBA::operator%(const RGBA& other)
 
 RGBA RGBA::dump()
 {
-    char txt[32];
+    char txt[36];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "RGBA(%03d,%03d,%03d,%03d) HEX(%s)", r, g, b, a, toHEX().c_str());
     cout << txt << endl;
@@ -214,7 +214,7 @@ RGBA RGBA::blend(const RGBA& rgba) {
     r = (r * a1 + rgba.r * a2 - r * a1 * a2) / ar + .5f;
     g = (g * a1 + rgba.g * a2 - g * a1 * a2) / ar + .5f;
     b = (b * a1 + rgba.b * a2 - b * a1 * a2) / ar + .5f;
-    a = ar * 255;
+    a = ar * RGBA::MAX;
     
     return *this;
 }
@@ -223,7 +223,7 @@ RGBA RGBA::fromRGB(const RGB& rgb) {
     r = rgb.r;
     g = rgb.g;
     b = rgb.b;
-    a = RGBA::MAX;
+    a = RGBA::MIN;
     return *this;
 }
 
@@ -283,12 +283,10 @@ HSV RGBA::toHSV()
 
 string RGBA::toHEX()
 {
-    std::string s_rgba("");
-    s_rgba.append(StringUtils::hex02(red  ()));
-    s_rgba.append(StringUtils::hex02(green()));
-    s_rgba.append(StringUtils::hex02(blue ()));
-    s_rgba.append(StringUtils::hex02(alpha()));
-    return s_rgba;
+    char txt[10];
+    memset(txt, 0 , sizeof(txt));
+    sprintf(txt, "#%02X%02X%02X%02X", r, g, b, a);
+    return string(txt);
 }
 
 

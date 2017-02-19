@@ -198,13 +198,14 @@ void ColorRandom_TestCase() {
 void CompareColor_TestCase() {
     cout << "<# Compare Color With Mode Start" << endl;
     
-    RGB  c1 = RGB(LIMEGREEN);
-    RGBA c2 = RGBA(LIMEGREEN);
-    CMYK c3 = CMYK(LIMEGREEN);
-    HSL  c4 = HSL(LIMEGREEN);
-    HSV  c5 = HSV(LIMEGREEN);
-    cout << "[Compare Color] LIMEGREEN: HEX(#32CD32)" << endl;
-    cout << "[Compare Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV " << endl;
+    RGB  c1 = RGB(LIMEGREEN).dump();
+    RGBA c2 = RGBA(LIMEGREEN).alpha(88).dump();
+    CMYK c3 = CMYK(LIMEGREEN).dump();
+    HSL  c4 = HSL(LIMEGREEN).dump();
+    HSV  c5 = HSV(LIMEGREEN).dump();
+    cout << "[Color Value] LIMEGREEN: HEX(#32CD32)" << endl;
+    cout << "[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV " << endl;
+    cout << "[CampareMode] loose :" << endl;
     cout << "c1 == c2 ? " << (equals(c1, c2) ? "True" : "False") << endl;
     cout << "c1 == c3 ? " << (equals(c1, c3) ? "True" : "False") << endl;
     cout << "c1 == c4 ? " << (equals(c1, c4) ? "True" : "False") << endl;
@@ -215,6 +216,19 @@ void CompareColor_TestCase() {
     cout << "c3 == c4 ? " << (equals(c3, c4) ? "True" : "False") << endl;
     cout << "c3 == c5 ? " << (equals(c3, c5) ? "True" : "False") << endl;
     cout << "c4 == c5 ? " << (equals(c4, c5) ? "True" : "False") << endl;
+    cout << "[Color Value] LIMEGREEN: HEX(#32CD32)" << endl;
+    cout << "[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV " << endl;
+    cout << "[CampareMode] strict :" << endl;
+    cout << "c1 == c2 ? " << (sequals(c1, c2) ? "True" : "False") << endl;
+    cout << "c1 == c3 ? " << (sequals(c1, c3) ? "True" : "False") << endl;
+    cout << "c1 == c4 ? " << (sequals(c1, c4) ? "True" : "False") << endl;
+    cout << "c1 == c5 ? " << (sequals(c1, c5) ? "True" : "False") << endl;
+    cout << "c2 == c3 ? " << (sequals(c2, c3) ? "True" : "False") << endl;
+    cout << "c2 == c4 ? " << (sequals(c2, c4) ? "True" : "False") << endl;
+    cout << "c2 == c5 ? " << (sequals(c2, c5) ? "True" : "False") << endl;
+    cout << "c3 == c4 ? " << (sequals(c3, c4) ? "True" : "False") << endl;
+    cout << "c3 == c5 ? " << (sequals(c3, c5) ? "True" : "False") << endl;
+    cout << "c4 == c5 ? " << (sequals(c4, c5) ? "True" : "False") << endl;
     
     cout << "!!! Compare Color With Mode End #>" << endl << endl;
 }

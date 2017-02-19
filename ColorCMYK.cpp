@@ -140,7 +140,7 @@ CMYK CMYK::operator % (const CMYK& other) {
 }
 
 CMYK CMYK::dump() {
-    char txt[128];
+    char txt[48];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "CMYK(%.03f,%.03f,%.03f,%.03f) HEX(%s)", c, m, y, k, toHEX().c_str());
     std::cout << txt << std::endl;
@@ -157,14 +157,14 @@ CMYK CMYK::random() {
 }
 
 CMYK CMYK::fromRGB(const RGB& rgb) {
-    t_cmyk c0 = 255 - rgb.r;
-    t_cmyk m0 = 255 - rgb.g;
-    t_cmyk y0 = 255 - rgb.b;
+    t_cmyk c0 = RGB::MAX - rgb.r;
+    t_cmyk m0 = RGB::MAX - rgb.g;
+    t_cmyk y0 = RGB::MAX - rgb.b;
     k = min03(c0, m0, y0);
-    c = (c0-k) * 1.f / ((255-k) == 0 ? 1 : (255-k));
-    m = (m0-k) * 1.f / ((255-k) == 0 ? 1 : (255-k));
-    y = (y0-k) * 1.f / ((255-k) == 0 ? 1 : (255-k));
-    k = k * 1.f / 255;
+    c = (c0-k) * 1.f / ((RGB::MAX-k) == 0 ? 1 : (RGB::MAX-k));
+    m = (m0-k) * 1.f / ((RGB::MAX-k) == 0 ? 1 : (RGB::MAX-k));
+    y = (y0-k) * 1.f / ((RGB::MAX-k) == 0 ? 1 : (RGB::MAX-k));
+    k = k * 1.f / RGB::MAX;
     return *this;
 }
 
@@ -185,9 +185,9 @@ CMYK CMYK::fromHSV(const HSV& hsv) {
 }
 
 RGB CMYK::toRGB() {
-    t_rgb r = 255 * (1.0f - c) * (1.0f - k);
-    t_rgb g = 255 * (1.0f - m) * (1.0f - k);
-    t_rgb b = 255 * (1.0f - y) * (1.0f - k);
+    t_rgb r = RGB::MAX * (1.0f - c) * (1.0f - k);
+    t_rgb g = RGB::MAX * (1.0f - m) * (1.0f - k);
+    t_rgb b = RGB::MAX * (1.0f - y) * (1.0f - k);
     return RGB(r, g, b);
 }
 

@@ -97,8 +97,8 @@ public:
     }
     
     t_rgba check(d_rgba n_rgb) {
-        if( n_rgb < 0) n_rgb = 0;
-        if( n_rgb > 255) n_rgb = 255;
+        if( n_rgb < RGBA::MIN) n_rgb = RGBA::MIN;
+        if( n_rgb > RGBA::MAX) n_rgb = RGBA::MAX;
         return (t_rgba)n_rgb;
     }
     

@@ -109,8 +109,8 @@ public:
         return *this;
     }
     t_rgb check(int n_rgb) {
-        if( n_rgb < 0) n_rgb = 0;
-        if( n_rgb > 255) n_rgb = 255;
+        if( n_rgb < RGB::MIN) n_rgb = RGB::MIN;
+        if( n_rgb > RGB::MAX) n_rgb = RGB::MAX;
         return (t_rgb)n_rgb;
     }
     RGB dump();

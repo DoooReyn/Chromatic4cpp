@@ -25,21 +25,29 @@ namespace Chromatic {
         eColorRGBA,
     } ColorType;
     
-    template<class T> int getArrayLen(T& array)
-    {//使用模板定义一 个函数getArrayLen,该函数将返回数组array的长度
+    template<class T> int getArrayLen(T& array) {
+        //获得数组array的长度
         return (sizeof(array) / sizeof(array[0]));
     }
     
-    template<class T> T randomColor(T& c)
-    {//使用模板定义一 个函数getArrayLen,该函数将返回数组array的长度
+    template<class T> T randomColor(T& c){
+        //返回对应色彩模式的随机色值
         return c.random();
     }
     
-//    RGB randomRGB();
-//    RGBA randomRGBA();
-//    CMYK randomCMYK();
-//    HSL randomHSL();
-//    HSV randomHSV();
+    template<class T1, class T2> bool equals(T1& t1, T2& t2) {
+        //宽松比较两种色彩模式的色值
+        return t1.equals(T1(t2)) || t2.equals(T2(t1));
+    }
+    
+    template<class T1, class T2> bool sequals(T1& t1, T2& t2) {
+        //严格比较两种色彩模式的色值
+        return t1.equals(T1(t2)) && t2.equals(T2(t1));
+    }
+    
+//    template<class T1, class T2> bool operator==(T1& t1, T2& t2) {
+//        return t1.equals(T1(t2));
+//    }
     
     const string INDIGO                = "4B0082";
     const string GOLD                  = "FFD700";
