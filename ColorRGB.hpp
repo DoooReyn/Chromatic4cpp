@@ -44,6 +44,8 @@ public:
     bool operator != (const RGB& other) const;
     bool operator == (const string hex) const;
     bool operator != (const string hex) const;
+    RGB  operator =  (const string hex);
+    RGB  operator =  (const char* hex);
     RGB  operator |  (const RGB& other);
     RGB  operator &  (const RGB& other);
     RGB  operator +  (const t_rgb cv);
@@ -101,6 +103,7 @@ public:
         return *this % other;
     }
     RGB opposite();
+    RGB difference(const RGB& rgb);
     
     
     /* methods */
@@ -108,15 +111,17 @@ public:
         r = g = b = v;
         return *this;
     }
+    RGB clear(string hex);
     t_rgb check(int n_rgb) {
         if( n_rgb < RGB::MIN) n_rgb = RGB::MIN;
         if( n_rgb > RGB::MAX) n_rgb = RGB::MAX;
         return (t_rgb)n_rgb;
     }
     RGB dump();
-    RGB random();    
+    RGB random();
+    RGB blend(const RGB& rgb);
     RGB blend(const string hex);
-    RGB blend(const string* hexArr, int size=0);
+    RGB blend4PSMode(const RGB& rgb, E_PS_BLEND_MODE mode);
     
     
     // getter/setter
@@ -141,6 +146,9 @@ public:
         b = cv;
         return *this;
     }
+    RGB red(string cv);
+    RGB green(string cv);
+    RGB blue(string cv);
     
     
     // convertor
@@ -159,6 +167,7 @@ public:
     static const t_rgb MIN;
     static const t_rgb MID;
     static const t_rgb MAX;
+    static const float MIDF;
 };
 
 #endif /* ColorRGB_hpp */

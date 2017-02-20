@@ -243,5 +243,21 @@ int main() {
     RGBA_Blend_TestCase();
     ColorRandom_TestCase();
     CompareColor_TestCase();
+    
+    RGB c1 = RGB("ff9999").dump();  // 定义 c1 的 RGB 值
+    RGB c2 = RGB("CAE90A").dump();   // 定义 c2 的 RGB 值
+    cout << "===> PS 图层混合模式 <===" << endl;
+    cout << "1.Darken:变暗 -> 取A与B中当前通道颜色值较小的一个，整体会变暗暗" << endl;
+    c1.blend4PSMode(c2, eDarken).dump();
+    cout << "2.Multiply:正片叠底 -> 这种方式混合会得到一个比两个图层都暗的颜色" << endl;
+    c1.blend4PSMode(c2, eMultiply).dump();
+    cout << "3.ColorBurn:颜色加深 -> 加暗图层的颜色值，加上的颜色越亮，效果越细腻" << endl;
+    c1.blend4PSMode(c2, eColorBurn).dump();
+    cout << "4.LinearBurn:线性加深 -> 比变暗效果更加强烈，深色几乎被转成黑色，浅色也全部被加深" << endl;
+    c1.blend4PSMode(c2, eLinearBurn).dump();
+    cout << "7.ColorDodge:颜色减淡 -> 颜色减淡" << endl;
+    c1.blend4PSMode(c2, eColorDodge).dump();
+    cout << "9.Overlay:叠加 -> 一般来说，发生变化的都是中间色调，高色和暗色区域基本保持不变" << endl;
+    c1.blend4PSMode(c2, eOverlay).dump();
 }
 

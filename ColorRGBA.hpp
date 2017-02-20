@@ -107,6 +107,7 @@ public:
     RGBA opposite();
     RGBA blend(const string hex);
     RGBA blend(const RGBA& other);
+    RGBA difference(const RGBA& rgba);
 
     
     /* getter/setter */
@@ -139,6 +140,10 @@ public:
         a = cv;
         return *this;
     }
+    RGBA red(string cv);
+    RGBA green(string cv);
+    RGBA blue(string cv);
+    RGBA alpha(string cv);
     
     /* convertor */
     RGBA fromAlphaF(t_rgba _r, t_rgba _g, t_rgba _b, float _a);

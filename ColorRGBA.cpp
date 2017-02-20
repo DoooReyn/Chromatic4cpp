@@ -10,6 +10,7 @@
 #include "StringUtils.hpp"
 #include <iostream>
 #include <vector>
+#include <assert.h>
 using namespace Chromatic;
 
 RGBA::RGBA()
@@ -180,6 +181,24 @@ RGBA RGBA::operator%(const RGBA& other)
     return *this;
 }
 
+
+RGBA RGBA::red(string cv) {
+    r = getColorVecFromHex(cv);
+    return *this;
+}
+RGBA RGBA::green(string cv) {
+    g = getColorVecFromHex(cv);
+    return *this;
+}
+RGBA RGBA::blue(string cv) {
+    b = getColorVecFromHex(cv);
+    return *this;
+}
+RGBA RGBA::alpha(string cv) {
+    a = getColorVecFromHex(cv);
+    return *this;
+}
+
 RGBA RGBA::dump()
 {
     char txt[36];
@@ -219,6 +238,14 @@ RGBA RGBA::blend(const RGBA& rgba) {
     return *this;
 }
 
+RGBA RGBA::difference(const RGBA& rgba) {
+    t_rgba _r = abs(r - rgba.r);
+    t_rgba _g = abs(g - rgba.g);
+    t_rgba _b = abs(b - rgba.b);
+    t_rgba _a = abs(a - rgba.a);
+    return RGBA(_r, _g, _b, _a);
+}
+
 RGBA RGBA::fromRGB(const RGB& rgb) {
     r = rgb.r;
     g = rgb.g;
@@ -255,9 +282,8 @@ RGBA RGBA::fromHEX(string hex, bool bCheckHex) {
     vecRGBA.push_back(&b);
     vecRGBA.push_back(&a);
     for(unsigned long i=0,j=0; i<unSize && i<4; i++,j+=2) {
-        int nhigh = StringUtils::hex01(hex.at(j)) * 16;
-        int nlow  = (j+1) >= unHexSize ? 0 : StringUtils::hex01(hex.at(j+1));
-        *vecRGBA.at(i) = t_rgba(nhigh + nlow);
+        int sub = (j+1) >= unHexSize ? 1 : 2;
+        *vecRGBA.at(i) = getColorVecFromHex(hex.substr(j, sub));
     }
     return *this;
 }

@@ -26,4 +26,34 @@ typedef t_hsl_hue t_hsv_hue;
 typedef t_hsl_saturation t_hsv_saturation;
 typedef t_hsl_lightness t_hsv_value;
 
+typedef enum {
+    eNormal = 0,
+    eDarken,
+    eMultiply,
+    eColorBurn,
+    eLinearBurn,
+    eDarker,
+    eLighten,
+    eScreen,
+    eColorDodge,
+    eLinearDodge,
+    eLighter,
+    eOverlay,
+    eSoftLight,
+    eHardLight,
+    eVividLight,
+    eLinearLight,
+    ePinLight,
+    eHardMix,
+    eDifference,
+    eExclusion,
+    eSubstract,
+    eDivide,
+    eHSLHue,
+    eHSLSaturation,
+    eHSLColor,
+    eHSLLuminosity,
+    Dissolve,
+} E_PS_BLEND_MODE;
+
 #endif /* BaseTypes_hpp */

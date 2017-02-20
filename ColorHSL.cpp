@@ -131,7 +131,7 @@ HSL HSL::dump() {
     char txt[32];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "HSL(%03d,%.03f,%.03f) HEX(%s)", h, s, l, toHEX().c_str());
-    std::cout << txt << std::endl;
+    cout << txt << endl;
     return *this;
 }
 

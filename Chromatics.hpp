@@ -17,6 +17,7 @@
 #include "ColorCMYK.hpp"
 #include "ColorHSL.hpp"
 #include "ColorHSV.hpp"
+#include "StringUtils.hpp"
 using namespace std;
 
 namespace Chromatic {
@@ -45,9 +46,7 @@ namespace Chromatic {
         return t1.equals(T1(t2)) && t2.equals(T2(t1));
     }
     
-//    template<class T1, class T2> bool operator==(T1& t1, T2& t2) {
-//        return t1.equals(T1(t2));
-//    }
+    unsigned char getColorVecFromHex(string hex);
     
     const string INDIGO                = "4B0082";
     const string GOLD                  = "FFD700";

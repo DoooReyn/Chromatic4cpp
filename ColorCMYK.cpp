@@ -136,7 +136,7 @@ CMYK CMYK::dump() {
     char txt[48];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "CMYK(%.03f,%.03f,%.03f,%.03f) HEX(%s)", c, m, y, k, toHEX().c_str());
-    std::cout << txt << std::endl;
+    cout << txt << endl;
     return *this;
 }
 
