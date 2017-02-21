@@ -8,8 +8,8 @@
 
 #include "StringUtils.hpp"
 
-string StringUtils::itoa(int value, int base) {
-    const char digitMap[] = "0123456789abcdef";
+const string StringUtils::itoa(int value, int base) {
+    const char digitMap[] = "0123456789ABCDEF";
     string buf;
     if (base == 0 || base > 16) {
         // Error: may add more trace/log output here
@@ -36,17 +36,17 @@ string StringUtils::itoa(int value, int base) {
     return sign.append(buf);
 }
 
-int StringUtils::hexStr2int(string hex) {
+int StringUtils::hexStr2int(const string hex) {
     if(!checkhex(hex)) return -1;
     int a = 0;
     sscanf(hex.c_str(), "%x", &a);
     return a;
 }
 
-const string StringUtils::fill02(string h) {
-    if(h.size() < 2)
-        h.insert(0, "0");
-    return h;
+const string StringUtils::fill02(string hex) {
+    if(hex.size() < 2)
+        hex.insert(0, "0");
+    return hex;
 }
 
 const string StringUtils::fill03(int v) {
@@ -62,7 +62,7 @@ const string StringUtils::fill03(int v) {
 bool StringUtils::checkhex(string hex) {
     bool isvalid = true;
     string hexdict = "0123456789ABCDEF";
-    hex = touppercase(hex);
+    touppercase(hex);
     for(unsigned long i=0; i<hex.size(); i++) {
         isvalid = hexdict.find(hex.at(i)) == string::npos;
         if(isvalid) return false;
@@ -70,20 +70,16 @@ bool StringUtils::checkhex(string hex) {
     return true;
 }
 
-string StringUtils::touppercase(string& s)
+void StringUtils::touppercase(string& s)
 {
-    string ret(s.size(), char());
     for(unsigned int i = 0; i < s.size(); ++i)
-        ret[i] = (s[i] <= 'z' && s[i] >= 'a') ? s[i]-('a'-'A') : s[i];
-    return ret;
+        s[i] = (s[i] <= 'z' && s[i] >= 'a') ? s[i]-('a'-'A') : s[i];
 }
 
-string StringUtils::tolowercase(string& s)
+void StringUtils::tolowercase(string& s)
 {
-    string ret(s.size(), char());
     for(unsigned int i = 0; i < s.size(); ++i)
-        ret[i] = (s[i] <= 'Z' && s[i] >= 'A') ? s[i]+('a'-'A') : s[i];
-    return ret;
+        s[i] = (s[i] <= 'Z' && s[i] >= 'A') ? s[i]+('a'-'A') : s[i];
 }
 
 const int StringUtils::hex01(char hex) {
@@ -111,3 +107,4 @@ int StringUtils::hexChar2Int(char ch) {
     else
         return -1;
 }
+

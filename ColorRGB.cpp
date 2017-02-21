@@ -251,21 +251,21 @@ t_rgb _getDarkenCV(t_rgb a, t_rgb b) {
  * C = (A * B) / 255
  */
 t_rgb _getMultiplyCV(t_rgb a, t_rgb b) {
-    return a * b / 255;
+    return a * b * 1.f / RGB::MAX;
 }
 
 /*
  * C = (B == 0 ? B : max(0, (255 - ((255 - A) << 8 ) / B)))
  */
 t_rgb _getColorBurnCV(t_rgb a, t_rgb b) {
-    return b == 0 ? b : MAX(0, (255 - ((255 - a) << 8 ) / b));
+    return b == 0 ? b : MAX(0, (RGB::MAX - ((RGB::MAX - a) << 8 ) / b));
 }
 
 /*
  * C = (A + B < 255) ? 0 : (A + B - 255)
  */
 t_rgb _getLinearBurnCV(t_rgb a, t_rgb b) {
-    return (a + b < 255) ? 0 : (a + b - 255);
+    return (a + b < RGB::MAX) ? 0 : (a + b - RGB::MAX);
 }
 
 /*
@@ -274,40 +274,107 @@ t_rgb _getLinearBurnCV(t_rgb a, t_rgb b) {
  */
 t_rgb _getOverLayCV(t_rgb a, t_rgb b) {
     if(a < RGB::MIDF)
-        return a * b / RGB::MIDF + .5f;
+        return a * b * 1.f / RGB::MIDF + .5f;
     else
         return RGB::MAX - (RGB::MAX - b) * (RGB::MAX - a) / RGB::MIDF + .5f;
 }
 
-/* PS图层混合模型 : 开始 */
-// Below blending modes are from PhotoShop
-//    RGB blendPS4Darken(const RGB& rgb);     //变暗
-//    RGB blendPS4Multiply(const RGB& rgb);   //正片叠底
-//    RGB blendPS4ColorBurn(const RGB& rgb);  //颜色加深
-//    RGB blendPS4LinearBurn(const RGB& rgb); //线性加深
-//    RGB blendPS4Darker(const RGB& rgb);     //深色
-//    RGB blendPS4Lighten(const RGB& rgb);    //变亮
-//    RGB blendPS4Screen(const RGB& rgb);     //滤色
-//    RGB blendPS4ColorDodge(const RGB& rgb); //颜色减淡
-//    RGB blendPS4LinearDodge(const RGB& rgb);//线性减淡
-//    RGB blendPS4Lighter(const RGB& rgb);    //浅色
-//    RGB blendPS4Overlay(const RGB& rgb);    //叠加
-//    RGB blendPS4SoftLight(const RGB& rgb);  //柔光
-//    RGB blendPS4HardLight(const RGB& rgb);  //强光
-//    RGB blendPS4VividLight(const RGB& rgb); //亮光
-//    RGB blendPS4LinearLight(const RGB& rgb);//线性光
-//    RGB blendPS4PinLight(const RGB& rgb);   //点光
-//    RGB blendPS4HardMix(const RGB& rgb);    //实色混合
-//    RGB blendPS4Diffenrence(const RGB& rgb);//差值
-//    RGB blendPS4Exclusion(const RGB& rgb);  //排除
-//    RGB blendPS4Subtract(const RGB& rgb);   //减去
-//    RGB blendPS4Divide(const RGB& rgb);     //划分
-//    RGB blendPS4Hue(const RGB& rgb);        //色相
-//    RGB blendPS4Saturation(const RGB& rgb); //饱和度
-//    RGB blendPS4Color(const RGB& rgb);      //颜色
-//    RGB blendPS4Luminosity(const RGB& rgb); //明度
-//    RGB blendPS4Dissolve(const RGB& rgb);   //溶解（跟图像有关，暂时不在计划内）
-/* PS图层混合模型 : 结束 */
+/*
+ * 变亮：C = (B > A) ? B : A
+ */
+t_rgb _getLightenCV(t_rgb a, t_rgb b) {
+    return b > a ? b : a;
+}
+
+/*
+ * C = 255 - (((255 - A) * (255 - B)) >> 8))
+ */
+t_rgb _getScreenCV(t_rgb a, t_rgb b)
+{
+    return RGB::MAX - (((RGB::MAX - a) * (RGB::MAX - b)) >> 8);
+}
+
+
+/*
+ * C = (B == 255) ? B : min(255, ((A << 8 ) / (255 - B)))
+ */
+t_rgb _getColorDodgeCV(t_rgb a, t_rgb b)
+{
+    return (b == RGB::MAX) ? b : MIN(RGB::MAX, ((a << 8 ) / (RGB::MAX - b)));
+}
+
+/*
+ * C = min(255, (A + B))
+ */
+t_rgb _getLinearDodgeCV(t_rgb a, t_rgb b)
+{
+    return MIN(RGB::MAX, a + b);
+}
+
+/*
+ * C = B < 128 ? (2 * (( A >> 1) + 64)) * (B / 255) : (255 - ( 2 * (255 - ( (A >> 1) + 64 ) ) * ( 255 - B ) / 255 ));
+ */
+t_rgb _getSoftLightCV(t_rgb a, t_rgb b)
+{
+    return b < RGB::MID ? (2 * (( a >> 1) + 64)) * (b * 1.f / RGB::MAX) : (RGB::MAX - ( 2 * (RGB::MAX - ( (a >> 1) + 64 ) ) * ( RGB::MAX - b ) * 1.f / RGB::MAX ));
+}
+
+/*
+ * Overlay(B,A) (A < 128) ? (2 * A * B / 255) : (255 - 2 * (255 - A) * (255 - B) / 255)
+ */
+t_rgb _getHardLightCV(t_rgb a, t_rgb b)
+{
+    return (a < RGB::MAX) ? (2.f * a * b / RGB::MAX) : (RGB::MAX - 2.f * (RGB::MAX - a) * (RGB::MAX - b) / RGB::MAX);
+}
+
+
+/*
+ * Overlay(B,A) (A < 128) ? (2 * A * B / 255) : (255 - 2 * (255 - A) * (255 - B) / 255)
+ */
+t_rgb _getVividLight(t_rgb a, t_rgb b) {
+    return b < RGB::MID ? (b == 0 ? 2 * b : MAX(0, (RGB::MAX - ((RGB::MAX - a) << 8 ) * 1.f / (2 * b)))) : ((2 * (b - RGB::MID)) == RGB::MAX ? (2 * (b - RGB::MID)) : MIN(RGB::MAX, ((a << 8 ) * 1.f / (RGB::MAX - (2 * (b - RGB::MID)) )))) ;
+}
+
+/*
+ * C = min(255, max(0, ($B + 2 * $A) - 1))
+ */
+t_rgb _getLinearLightCV(t_rgb a, t_rgb b) {
+    return MIN(RGB::MAX, MAX( 0, ((b + 2 * a) - RGB::MAX)));
+}
+
+/*
+ * C = max(0, max(2 * B - 255, min(B, 2*A)))
+ */
+t_rgb _getPinLightCV(t_rgb a, t_rgb b) {
+    return MAX(0, MAX(2 * a - RGB::MAX, MAX(b, 2 * a)));
+}
+
+/*
+ * C = (VividLight(A,B) < 128) ? 0 : 255
+ */
+t_rgb _getHardMixCV(t_rgb a, t_rgb b) {
+    return _getVividLight(a, b) < RGB::MID ? RGB::MIN : RGB::MAX;
+}
+
+/*
+ * C = abs(A - B)
+ */
+t_rgb _getDifferenceCV(t_rgb a, t_rgb b) {
+    return abs(a - b);
+}
+
+/*
+ * C = A + B - 2 * A * B / 255
+ */
+t_rgb _getExclusionCV(t_rgb a, t_rgb b) {
+    return a + b - 2 * a * b * 1.f / RGB::MAX;
+}
+
+//结果色 = 基色 - 混合色
+t_rgb _getSubstractCV(t_rgb a, t_rgb b) {
+    return a * 1.f / b * RGB::MAX;
+}
+
 
 typedef t_rgb (*GETCVFUNC)(t_rgb, t_rgb);
 typedef RGB (*BLENDFUNC)(const RGB&, const RGB&, GETCVFUNC);
@@ -322,12 +389,36 @@ GETCVFUNC _getColorVecFunc(E_PS_BLEND_MODE mode) {
             return _getDarkenCV;
         case eMultiply:
             return _getMultiplyCV;
-        case eOverlay:
-            return _getOverLayCV;
         case eColorBurn:
             return _getColorBurnCV;
         case eLinearBurn:
             return _getLinearBurnCV;
+        case eLighten:
+            return _getLightenCV;
+        case eScreen:
+            return _getScreenCV;
+        case eColorDodge:
+            return _getColorDodgeCV;
+        case eLinearDodge:
+            return _getLinearDodgeCV;
+        case eOverlay:
+            return _getOverLayCV;
+        case eSoftLight:
+            return _getSoftLightCV;
+        case eHardLight:
+            return _getHardLightCV;
+        case eLinearLight:
+            return _getLinearLightCV;
+        case ePinLight:
+            return _getPinLightCV;
+        case eHardMix:
+            return _getHardMixCV;
+        case eDifference:
+            return _getDifferenceCV;
+        case eExclusion:
+            return _getExclusionCV;
+        case eSubstract:
+            return _getSubstractCV;
         case eNormal:
         default:
             NULL;

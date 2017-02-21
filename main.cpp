@@ -12,20 +12,24 @@
 using namespace Chromatic;
 using namespace std;
 
+void printInfo(const char * info) {
+    cout << info << endl;
+}
+
 void RGB_TestCase() {
-    cout << "<# RGB TestCase Start" << endl;
-    
-    cout << "=> RGB original data:" << endl;
+    printInfo("<# RGB TestCase Start");
+    printInfo("=> RGB original data:");
     RGB case0 = RGB(REBECCAPURPLE);
     case0.dump();
     
-    cout << endl << "=> single operator:" << endl;
+    printInfo("=> single operator:");
     (case0+1).dump();
     (case0-1).dump();
     (case0*2).dump();
     (case0/2).dump();
     (case0%15.f).dump();
-    cout << endl << "=> mixed  operator:" << endl;
+    
+    printInfo("=> mixed  operator:");
     case0.clear(166);
     (case0+RGB(1,1,1)).dump();
     (case0-RGB(1,1,1)).dump();
@@ -33,56 +37,57 @@ void RGB_TestCase() {
     (case0/RGB(2,2,2)).dump();
     (case0%RGB(15,15,15)).dump();
     
-    cout << endl << "=> use scale:" << endl;
+    printInfo("=> use scale:");
     (case0.scale(10.8).dump());
     
-    cout << endl << "=> use divide:" << endl;
+    printInfo("=> use divide:");
     (case0.divide(2).dump());
 
-    cout << endl << "=> from hex string(do check):" << endl;
+    printInfo("=> from hex string(do check):");
     case0.fromHEX("80aF*U", true).dump();
     
-    cout << endl << "=> from hex string(do not check):" << endl;
+    printInfo("=> from hex string(do not check):");
     case0.fromHEX("80aF*U", false).dump();
     
-    cout << endl << "=> to hex string:" << endl;
-    cout << case0.toHEX() << endl;
+    printInfo("=> to hex string:");
+    printInfo(case0.toHEX().c_str());
     
-    cout << endl << "=> from/to RGBA:" << endl;
+    printInfo("=> from/to RGBA:");
     case0.fromRGBA(case0.toRGBA().dump()).dump();
     
-    cout << endl << "=> clear with:" << endl;
+    printInfo("=> clear with:");
     case0.clear(255).dump();
     
-    cout << endl << "=> RED + LIME = YELLOW : " << endl;
+    printInfo("=> RED + LIME = YELLOW : ");
     (RGB(RED) + RGB(LIME)).dump();
     RGB(YELLOW).dump();
     
-    cout << endl << "=> convertor: " << endl;
+    printInfo("=> convertor: ");
     RGB rgb = RGB().fromHEX(ANTIQUEWHITE).dump();
     rgb.toRGBA().dump();
     rgb.toCMYK().dump();
     rgb.toHSL().dump();
     
-    cout << "!!! RGB TestCase End #>" << endl << endl;
+    printInfo("!!! RGB TestCase End #>");
 }
 
 
 void RGBA_TestCase() {
-    cout << "<# RGBA TestCase Start" << endl;
+    printInfo("<# RGBA TestCase Start");
     
     RGBA case0 = RGBA(INDIGO);
     
-    cout << "=> RGBA original data:" << endl;
+    printInfo("=> RGBA original data:");
     case0.dump();
     
-    cout << endl << "=> single operator:" << endl;
+    printInfo("=> single operator:");
     (case0+1).dump();
     (case0-1).dump();
     (case0*2).dump();
     (case0/2).dump();
     (case0%15.f).dump();
-    cout << endl << "=> mixed  operator:" << endl;
+    
+    printInfo("=> mixed  operator:");
     case0.clear(166);
     (case0+RGBA(1,1,1,1)).dump();
     (case0-RGBA(1,1,1,1)).dump();
@@ -90,96 +95,94 @@ void RGBA_TestCase() {
     (case0/RGBA(2,2,2,2)).dump();
     (case0%RGBA(15,15,15,15)).dump();
     
-    cout << endl << "=> use scale:" << endl;
+    printInfo("=> use scale:");
     (case0.scale(10.8).dump());
     
-    cout << endl << "=> use divide:" << endl;
+    printInfo("=> use divide:");
     (case0.divide(2).dump());
     
-    cout << endl << "=> from hex string (do check):" << endl;
+    printInfo("=> from hex string (do check):");
     case0.fromHEX("80aF*UE", true).dump();
     
-    cout << endl << "=> from hex string (do not check):" << endl;
+    printInfo("=> from hex string (do not check):");
     case0.fromHEX("80aF*UE", false).dump();
     
-    cout << endl << "=> to hex string:" << endl;
-    cout << case0.toHEX() << endl;
+    printInfo("=> to hex string:");
+    printInfo(case0.toHEX().c_str());
     
-    cout << endl << "=> from/to RGB:" << endl;
+    printInfo("=> from/to RGB:");
     case0.fromRGB(case0.toRGB().dump()).dump();
     
-    cout << endl << "=> clear with:" << endl;
+    printInfo("=> clear with:");
     case0.clear(255).dump();
     
-    cout << endl << "=> convertor: " << endl;
+    printInfo("=> convertor: ");
     RGBA rgba = RGBA().fromHEX(ANTIQUEWHITE).dump();
     rgba.toRGB().dump();
     rgba.toCMYK().dump();
     rgba.toHSL().dump();
     
-    cout << "!!! RGBA TestCase End #>" << endl << endl;
+    printInfo("!!! RGBA TestCase End #>");
 }
 
 void CMYK_TestCase() {
-    cout << "<# CMYK TestCase Start " << endl;
+    printInfo("<# CMYK TestCase Start ");
     
     CMYK cmyk = CMYK().fromHEX(ANTIQUEWHITE).dump();
     cmyk.toRGB().dump();
     cmyk.toHSL().dump();
     cmyk.toRGBA().dump();
     
-    cout << "!!! CMYK TestCase END #>" << endl << endl;
+    printInfo("!!! CMYK TestCase END #>");
 }
 
 void HSL_TestCase() {
-    cout << "<# HSL TestCase Start " << endl;
+    printInfo("<# HSL TestCase Start ");
     
     HSL hsl = HSL().fromHEX(ANTIQUEWHITE).dump();
     hsl.toRGB().dump();
     hsl.toCMYK().dump();
     hsl.toRGBA().dump();
     
-    cout << "!!! HSL TestCase Start #>" << endl << endl;
+    printInfo("!!! HSL TestCase Start #>");
 }
 
 void HSV_TestCase() {
-    cout << "<# HSV TestCase Start" << endl;
+    printInfo("<# HSV TestCase Start");
     HSV hsv = HSV().fromHEX(ANTIQUEWHITE).dump();
     hsv.toRGB().dump();
     hsv.toCMYK().dump();
     hsv.toRGBA().dump();
-    cout << "!!! HSV TestCase End #>" << endl << endl;
+    printInfo("!!! HSV TestCase End #>");
 }
 
 
 void RGB_Blend_TestCase() {
-    cout << "<# RGB Blend TestCase Start" << endl;
+    printInfo("<# RGB Blend TestCase Start");
     
     bool bBlendRedLime = RGB(RED).blend(LIME) == YELLOW;
-    cout << "Red blend Lime = Yellow ? ";
+    printInfo("Red blend Lime = Yellow ? ");
     bBlendRedLime ? cout << "True" : cout << "False";
-    cout << endl;
     
     bBlendRedLime = RGB(RED).blend(LIME) + RGB(YELLOW).opposite() == WHITE;
-    cout << "Red blend Green = Yellow ? ";
+    printInfo("Red blend Green = Yellow ?");
     bBlendRedLime ? cout << "True" : cout << "False";
-    cout << endl;
     
-    cout << "!!! RGB Blend TestCase End #>" << endl << endl;
+    printInfo("!!! RGB Blend TestCase End #>");
 }
 
 void RGBA_Blend_TestCase() {
-    cout << "<# RGBA Blend TestCase Start" << endl;
+    printInfo("<# RGBA Blend TestCase Start");
     
     RGBA c1 = RGBA().fromAlphaF(235, 152, 80, 0.6f).dump();
     RGBA c2 = RGBA().fromAlphaF(234, 97, 124, 0.8f).dump();
     c1.blend(c2).dump();
     
-    cout << "RGBA Blend TestCase End #>" << endl << endl;
+    printInfo("RGBA Blend TestCase End #>");
 }
 
 void ColorRandom_TestCase() {
-    cout << "<# Color Random TestCase Start" << endl;
+    printInfo("<# Color Random TestCase Start");
     
     RGB  c1 = RGB().random().dump();
     randomColor(c1).dump();
@@ -192,20 +195,21 @@ void ColorRandom_TestCase() {
     HSV  c5 = HSV().random().dump();
     randomColor(c5).dump();
     
-    cout << "!!! Color Random TestCase End #>" << endl << endl;
+    printInfo("!!! Color Random TestCase End #>");
 }
 
 void CompareColor_TestCase() {
-    cout << "<# Compare Color With Mode Start" << endl;
+    printInfo("<# Compare Color With Mode Start");
     
     RGB  c1 = RGB(LIMEGREEN).dump();
     RGBA c2 = RGBA(LIMEGREEN).alpha(88).dump();
     CMYK c3 = CMYK(LIMEGREEN).dump();
     HSL  c4 = HSL(LIMEGREEN).dump();
     HSV  c5 = HSV(LIMEGREEN).dump();
-    cout << "[Color Value] LIMEGREEN: HEX(#32CD32)" << endl;
-    cout << "[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV " << endl;
-    cout << "[CampareMode] loose :" << endl;
+    
+    printInfo("[Color Value] LIMEGREEN: HEX(#32CD32)");
+    printInfo("[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV ");
+    printInfo("[CampareMode] loose :");
     cout << "c1 == c2 ? " << (equals(c1, c2) ? "True" : "False") << endl;
     cout << "c1 == c3 ? " << (equals(c1, c3) ? "True" : "False") << endl;
     cout << "c1 == c4 ? " << (equals(c1, c4) ? "True" : "False") << endl;
@@ -216,9 +220,10 @@ void CompareColor_TestCase() {
     cout << "c3 == c4 ? " << (equals(c3, c4) ? "True" : "False") << endl;
     cout << "c3 == c5 ? " << (equals(c3, c5) ? "True" : "False") << endl;
     cout << "c4 == c5 ? " << (equals(c4, c5) ? "True" : "False") << endl;
-    cout << "[Color Value] LIMEGREEN: HEX(#32CD32)" << endl;
-    cout << "[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV " << endl;
-    cout << "[CampareMode] strict :" << endl;
+    
+    printInfo("[Color Value] LIMEGREEN: HEX(#32CD32)");
+    printInfo("[Color Mode ] c1: RGB, c2: RGBA, c3: CMYK, c4: HSL, c5: HSV ");
+    printInfo("[CampareMode] strict :");
     cout << "c1 == c2 ? " << (sequals(c1, c2) ? "True" : "False") << endl;
     cout << "c1 == c3 ? " << (sequals(c1, c3) ? "True" : "False") << endl;
     cout << "c1 == c4 ? " << (sequals(c1, c4) ? "True" : "False") << endl;
@@ -230,7 +235,52 @@ void CompareColor_TestCase() {
     cout << "c3 == c5 ? " << (sequals(c3, c5) ? "True" : "False") << endl;
     cout << "c4 == c5 ? " << (sequals(c4, c5) ? "True" : "False") << endl;
     
-    cout << "!!! Compare Color With Mode End #>" << endl << endl;
+    printInfo("!!! Compare Color With Mode End #>");
+}
+
+void PSBlendingMode_TestCase() {
+    printInfo("===> PS 图层混合模型 <===");
+    printInfo("基色:");
+    RGB c1 = RGB("ff9999").dump();
+    printInfo("混色:");
+    RGB c2 = RGB("CAE90A").dump();
+    printInfo("1.Darken:变暗");
+    c1.blend4PSMode(c2, eDarken).dump();
+    printInfo("2.Multiply:正片叠底");
+    c1.blend4PSMode(c2, eMultiply).dump();
+    printInfo("3.ColorBurn:颜色加深");
+    c1.blend4PSMode(c2, eColorBurn).dump();
+    printInfo("4.LinearBurn:线性加深");
+    c1.blend4PSMode(c2, eLinearBurn).dump();
+    printInfo("5.Lighten:变亮");
+    c1.blend4PSMode(c2, eLighten).dump();
+    printInfo("6.Lighten:滤色");
+    c1.blend4PSMode(c2, eScreen).dump();
+    printInfo("7.ColorDodge:颜色减淡");
+    c1.blend4PSMode(c2, eColorDodge).dump();
+    printInfo("8.LinearDodge:线性减淡");
+    c1.blend4PSMode(c2, eLinearDodge).dump();
+    printInfo("9.Overlay:叠加");
+    c1.blend4PSMode(c2, eOverlay).dump();
+    printInfo("10.SoftLight:柔光");
+    c1.blend4PSMode(c2, eSoftLight).dump();
+    printInfo("11.HardLight:强光");
+    c1.blend4PSMode(c2, eHardLight).dump();
+    printInfo("12.VividLight:亮光");
+    c1.blend4PSMode(c2, eVividLight).dump();
+    printInfo("13.LinearLight:线性光");
+    c1.blend4PSMode(c2, eLinearLight).dump();
+    printInfo("14.PinLight:点光");
+    c1.blend4PSMode(c2, ePinLight).dump();
+    printInfo("15.HardMix:实色混合");
+    c1.blend4PSMode(c2, eHardMix).dump();
+    printInfo("16.Difference:差值");
+    c1.blend4PSMode(c2, eDifference).dump();
+    printInfo("17.HardMix:排除");
+    c1.blend4PSMode(c2, eExclusion).dump();
+    printInfo("18.Substract:减去");
+    c1.blend4PSMode(c2, eSubstract).dump();
+    printInfo("===> PS 图层混合模型 <===");
 }
 
 int main() {
@@ -243,21 +293,6 @@ int main() {
     RGBA_Blend_TestCase();
     ColorRandom_TestCase();
     CompareColor_TestCase();
-    
-    RGB c1 = RGB("ff9999").dump();  // 定义 c1 的 RGB 值
-    RGB c2 = RGB("CAE90A").dump();   // 定义 c2 的 RGB 值
-    cout << "===> PS 图层混合模式 <===" << endl;
-    cout << "1.Darken:变暗 -> 取A与B中当前通道颜色值较小的一个，整体会变暗暗" << endl;
-    c1.blend4PSMode(c2, eDarken).dump();
-    cout << "2.Multiply:正片叠底 -> 这种方式混合会得到一个比两个图层都暗的颜色" << endl;
-    c1.blend4PSMode(c2, eMultiply).dump();
-    cout << "3.ColorBurn:颜色加深 -> 加暗图层的颜色值，加上的颜色越亮，效果越细腻" << endl;
-    c1.blend4PSMode(c2, eColorBurn).dump();
-    cout << "4.LinearBurn:线性加深 -> 比变暗效果更加强烈，深色几乎被转成黑色，浅色也全部被加深" << endl;
-    c1.blend4PSMode(c2, eLinearBurn).dump();
-    cout << "7.ColorDodge:颜色减淡 -> 颜色减淡" << endl;
-    c1.blend4PSMode(c2, eColorDodge).dump();
-    cout << "9.Overlay:叠加 -> 一般来说，发生变化的都是中间色调，高色和暗色区域基本保持不变" << endl;
-    c1.blend4PSMode(c2, eOverlay).dump();
+    PSBlendingMode_TestCase();
 }
 
