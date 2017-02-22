@@ -1,4 +1,7 @@
 # chromatic4cpp
+## 零、先声
+虽然目前 **chromatic4cpp** 的功能已经可以达成正常的服务，但私以为部分数据结构和命名空间的设计不太合理，以及存在一些混乱或者表达不够清晰的地方，因此有了[Chromatic4Cpp-Redesign](https://github.com/DoooReyn/Chromatic4Cpp-Redesign) 这个重新设计版本。
+作为重设版本，[Chromatic4Cpp-Redesign](https://github.com/DoooReyn/Chromatic4Cpp-Redesign) 将移植目前 **chromatic4cpp** 已完成的的所有功能，同时将获得持续更新，以精简和优化代码，提供更友好有趣的玩法，欢迎你的关注，一起来玩哦。
 
 ## 一、介绍
 `chromatic4cpp` 致力于为 `C++` 的色值操作和相互转换提供便利，当前已经支持 `RGB，RGBA，CMYK，HSL，HSV` 五种色值类型。
